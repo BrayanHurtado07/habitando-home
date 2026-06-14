@@ -56,6 +56,27 @@
     html { scroll-behavior: auto; }
     body { -webkit-font-smoothing: antialiased; }
 
+    /* ====== Sistema de interacción global ====== */
+    a, button { transition: color .3s ease, background-color .3s ease, border-color .3s ease, transform .35s cubic-bezier(.2,.9,.3,1), box-shadow .35s ease, opacity .3s ease; }
+
+    /* Header glass */
+    #nav { -webkit-backdrop-filter: blur(0px); backdrop-filter: blur(0px); }
+    #nav.glass { background: rgba(247,244,239,.72); -webkit-backdrop-filter: saturate(160%) blur(16px); backdrop-filter: saturate(160%) blur(16px); box-shadow: 0 1px 0 rgba(28,26,23,.06), 0 8px 30px -12px rgba(28,26,23,.12); }
+
+    /* Enlaces del nav con subrayado animado */
+    .nav-link { position: relative; }
+    .nav-link::after { content:''; position:absolute; left:0; right:0; bottom:-4px; height:1.5px; background:currentColor; transform:scaleX(0); transform-origin:left; transition:transform .35s cubic-bezier(.2,.9,.3,1); }
+    .nav-link:hover::after { transform:scaleX(1); }
+
+    /* Tarjetas que se elevan + el resto se difumina al pasar el mouse por una grilla */
+    .hover-group:hover .hover-card:not(:hover) { filter: blur(2px) saturate(.9); opacity: .55; transform: scale(.985); }
+    .hover-card { transition: filter .5s ease, opacity .5s ease, transform .5s cubic-bezier(.2,.9,.3,1), box-shadow .5s ease; will-change: transform, filter; }
+    .hover-card:hover { transform: translateY(-6px); box-shadow: 0 30px 60px -24px rgba(28,26,23,.4); }
+
+    /* Imagen con zoom suave al hover */
+    .img-zoom img { transition: transform .8s cubic-bezier(.2,.8,.2,1); }
+    .img-zoom:hover img { transform: scale(1.06); }
+
     /* Lenis smooth scroll */
     html.lenis, html.lenis body { height: auto; }
     .lenis.lenis-smooth { scroll-behavior: auto !important; }
@@ -105,21 +126,23 @@
   <!-- ============ HEADER ============ -->
   <header id="nav" class="fixed top-0 inset-x-0 z-50 transition-all duration-500">
     <div class="mx-auto max-w-7xl px-5 sm:px-8 h-20 flex items-center justify-between">
-      <a href="#top" class="leading-none">
-        <span class="block font-serif text-2xl font-semibold tracking-tight">Habitando</span>
-        <span class="block text-[10px] uppercase tracking-[0.28em] text-ink/50">by Iloremstudio</span>
+      <a href="#top" class="leading-none group">
+        <span class="block font-serif text-[1.7rem] font-semibold tracking-[-0.02em] group-hover:text-clay transition-colors">Habitando</span>
+        <span class="block text-[9px] uppercase tracking-[0.42em] text-ink/45 mt-0.5">by Iloremstudio</span>
       </a>
-      <nav class="hidden md:flex items-center gap-9 text-sm">
-        <a href="#coleccion" class="hover:text-clay transition-colors">Colección</a>
-        <a href="#configurador" class="hover:text-clay transition-colors">Personaliza</a>
-        <a href="#materiales" class="hover:text-clay transition-colors">Materiales</a>
-        <a href="#ambientes" class="hover:text-clay transition-colors">Ambientes</a>
+      <nav class="hidden md:flex items-center gap-10 text-[13px] uppercase tracking-[0.14em] font-medium text-ink/70">
+        <a href="#coleccion" class="nav-link hover:text-ink">Colección</a>
+        <a href="#configurador" class="nav-link hover:text-ink">Personaliza</a>
+        <a href="#materiales" class="nav-link hover:text-ink">Materiales</a>
+        <a href="#ambientes" class="nav-link hover:text-ink">Ambientes</a>
+        <a href="#contacto" class="nav-link hover:text-ink">Contacto</a>
       </nav>
       <div class="flex items-center gap-3">
-        <a href="#contacto" class="hidden sm:inline-flex rounded-full bg-ink text-cream text-sm px-5 py-2.5 hover:bg-clay transition-colors">
-          Pedir catálogo
+        <a href="assets/catalogo-habitando.pdf" download class="hidden sm:inline-flex items-center gap-2 rounded-full bg-ink text-cream text-[13px] tracking-wide px-5 py-2.5 hover:bg-clay">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+          Catálogo
         </a>
-        <button id="cartBtn" aria-label="Abrir carrito" class="relative rounded-full border border-ink/20 w-11 h-11 flex items-center justify-center hover:border-ink transition-colors">
+        <button id="cartBtn" aria-label="Abrir carrito" class="relative rounded-full border border-ink/20 w-11 h-11 flex items-center justify-center hover:border-ink hover:bg-ink hover:text-cream">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
           <span id="cartCount" class="hidden absolute -top-1 -right-1 bg-clay text-cream text-[10px] font-bold rounded-full min-w-[18px] h-[18px] px-1 flex items-center justify-center">0</span>
         </button>
@@ -228,21 +251,29 @@
 
   <!-- ============ COLECCION / INTRO ============ -->
   <section id="coleccion" class="py-28 px-5 sm:px-8">
-    <div class="mx-auto max-w-7xl grid lg:grid-cols-12 gap-10">
-      <div class="lg:col-span-5">
-        <p class="reveal text-xs uppercase tracking-[0.3em] text-clay mb-5">La colección</p>
-        <h2 class="reveal font-serif font-light text-[clamp(2.2rem,5vw,4rem)] leading-[1.05]">
-          Seis tonos.<br />Dos tactos.<br />Infinitas combinaciones.
-        </h2>
+    <div class="mx-auto max-w-7xl">
+      <div class="grid lg:grid-cols-12 gap-10 mb-14">
+        <div class="lg:col-span-6">
+          <p class="reveal text-xs uppercase tracking-[0.3em] text-clay mb-5">La colección</p>
+          <h2 class="reveal font-serif font-light text-[clamp(2.2rem,5vw,4rem)] leading-[1.04]">
+            Seis tonos.<br />Dos tactos.<br />Infinitas combinaciones.
+          </h2>
+        </div>
+        <div class="lg:col-span-6 lg:pt-16">
+          <p class="reveal text-ink/65 text-lg leading-relaxed max-w-xl">
+            Diseñamos cada cojín para que sea protagonista o acompañante. El
+            <em class="text-ink">bouclé</em> aporta volumen y carácter; el
+            <em class="text-ink">chenille</em>, una caída suave y aterciopelada.
+            Elige tu paleta y deja que tus espacios respiren.
+          </p>
+          <a href="#configurador" class="reveal mt-7 inline-flex items-center gap-2 font-medium hover:text-clay group">
+            Personalizar ahora <span class="transition-transform group-hover:translate-x-1">→</span>
+          </a>
+        </div>
       </div>
-      <div class="lg:col-span-7 lg:pt-16">
-        <p class="reveal text-ink/65 text-lg leading-relaxed max-w-xl">
-          Diseñamos cada cojín para que sea protagonista o acompañante. El
-          <em class="text-ink">bouclé</em> aporta volumen y carácter; el
-          <em class="text-ink">chenille</em>, una caída suave y aterciopelada.
-          Elige tu paleta y deja que tus espacios respiren.
-        </p>
-      </div>
+
+      <!-- Paleta: 6 tonos -->
+      <div id="palette" class="reveal hover-group grid grid-cols-3 md:grid-cols-6 gap-3"></div>
     </div>
   </section>
 
@@ -255,10 +286,10 @@
         <div id="stage" class="relative aspect-square rounded-[2.5rem] flex items-center justify-center overflow-hidden bg-sand transition-colors duration-700">
           <!-- Visor 3D real (se activa si existe assets/3d/cojin.glb) -->
           <model-viewer id="cushion3d" class="hidden absolute inset-0 w-full h-full"
-            camera-controls touch-action="pan-y" auto-rotate rotation-per-second="18deg"
-            interaction-prompt="none" disable-tap exposure="1.05" shadow-intensity="1.1"
-            shadow-softness="0.9" environment-image="neutral" camera-orbit="0deg 78deg auto"
-            min-camera-orbit="auto 55deg auto" max-camera-orbit="auto 95deg auto"
+            camera-controls touch-action="pan-y" auto-rotate rotation-per-second="20deg"
+            interaction-prompt="none" exposure="1.05" shadow-intensity="1.15"
+            shadow-softness="0.9" environment-image="neutral" camera-orbit="0deg 78deg 100%"
+            min-camera-orbit="auto 5deg 60%" max-camera-orbit="auto 170deg 200%"
             ar ar-modes="webxr scene-viewer quick-look" style="background:transparent"></model-viewer>
           <!-- Fallback: cojín dibujado como SVG (o render PNG si existe) -->
           <div id="cushionArt" class="cushion w-[74%] max-w-[440px]"></div>
@@ -315,121 +346,213 @@
   </section>
 
   <!-- ============ MATERIALES ============ -->
-  <section id="materiales" class="py-28 px-5 sm:px-8 mt-10">
+  <section id="materiales" class="py-28 px-5 sm:px-8">
     <div class="mx-auto max-w-7xl">
-      <div class="grid md:grid-cols-2 gap-6">
-        <article class="reveal group rounded-[2rem] bg-ink text-cream p-10 md:p-14 overflow-hidden relative">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
+        <div>
+          <p class="reveal text-xs uppercase tracking-[0.3em] text-clay mb-4">Materiales</p>
+          <h2 class="reveal font-serif font-light text-[clamp(2.2rem,5vw,4rem)] leading-[1.02]">Dos tactos,<br/>una misma calidad.</h2>
+        </div>
+        <p class="reveal max-w-sm text-ink/60 leading-relaxed">
+          Telas de tapicería de alta densidad y relleno de napa siliconada
+          antialérgica. Cada cojín lleva costura con <em class="text-ink">vivo</em> y
+          esquinas marcadas para una caída impecable.
+        </p>
+      </div>
+
+      <div class="hover-group grid md:grid-cols-2 gap-6">
+        <article class="hover-card reveal rounded-[2rem] bg-ink text-cream p-10 md:p-14 relative overflow-hidden">
+          <span class="absolute -right-8 -top-8 w-44 h-44 rounded-full bg-clay/20 blur-2xl"></span>
           <p class="text-xs uppercase tracking-[0.3em] text-clay mb-4">Textura 01</p>
-          <h3 class="font-serif text-4xl mb-4">Bouclé</h3>
+          <h3 class="font-serif text-5xl mb-4">Bouclé</h3>
           <p class="text-cream/70 max-w-sm leading-relaxed">
             Tejido rizado de volumen escultórico. Cálido al tacto, resistente y
             con esa pátina artesanal que da vida a sofás y camas.
           </p>
-          <ul class="mt-8 space-y-2 text-sm text-cream/60">
-            <li>— Ideal para acentos y contrastes</li>
-            <li>— Fácil mantenimiento</li>
-            <li>— Disponible en crema y terracota</li>
+          <ul class="mt-8 space-y-2.5 text-sm text-cream/60">
+            <li class="flex gap-3"><span class="text-clay">✦</span> Ideal para acentos y contrastes</li>
+            <li class="flex gap-3"><span class="text-clay">✦</span> Tacto nudoso, fácil mantenimiento</li>
+            <li class="flex gap-3"><span class="text-clay">✦</span> Disponible en crema y terracota</li>
           </ul>
         </article>
-        <article class="reveal group rounded-[2rem] bg-forest text-cream p-10 md:p-14 overflow-hidden relative">
+        <article class="hover-card reveal rounded-[2rem] bg-forest text-cream p-10 md:p-14 relative overflow-hidden">
+          <span class="absolute -right-8 -top-8 w-44 h-44 rounded-full bg-sand/20 blur-2xl"></span>
           <p class="text-xs uppercase tracking-[0.3em] text-sand mb-4">Textura 02</p>
-          <h3 class="font-serif text-4xl mb-4">Chenille</h3>
+          <h3 class="font-serif text-5xl mb-4">Chenille</h3>
           <p class="text-cream/70 max-w-sm leading-relaxed">
             Aterciopelado de caída suave y brillo sutil. Una superficie densa
             y uniforme que aporta elegancia silenciosa a cualquier ambiente.
           </p>
-          <ul class="mt-8 space-y-2 text-sm text-cream/60">
-            <li>— Tacto suave y sedoso</li>
-            <li>— Colores profundos y sólidos</li>
-            <li>— Verde, lima, beige y carbón</li>
+          <ul class="mt-8 space-y-2.5 text-sm text-cream/60">
+            <li class="flex gap-3"><span class="text-sand">✦</span> Tacto suave y sedoso</li>
+            <li class="flex gap-3"><span class="text-sand">✦</span> Colores profundos y sólidos</li>
+            <li class="flex gap-3"><span class="text-sand">✦</span> Verde, lima, beige y carbón</li>
           </ul>
         </article>
+      </div>
+
+      <!-- Tira de garantías -->
+      <div class="reveal mt-6 grid grid-cols-2 lg:grid-cols-4 gap-px rounded-[2rem] overflow-hidden bg-ink/10">
+        <div class="bg-cream p-7 text-center"><p class="font-serif text-3xl">100%</p><p class="text-xs text-ink/50 uppercase tracking-wider mt-1">Hecho a mano</p></div>
+        <div class="bg-cream p-7 text-center"><p class="font-serif text-3xl">Napa</p><p class="text-xs text-ink/50 uppercase tracking-wider mt-1">Relleno antialérgico</p></div>
+        <div class="bg-cream p-7 text-center"><p class="font-serif text-3xl">4</p><p class="text-xs text-ink/50 uppercase tracking-wider mt-1">Medidas</p></div>
+        <div class="bg-cream p-7 text-center"><p class="font-serif text-3xl">6</p><p class="text-xs text-ink/50 uppercase tracking-wider mt-1">Colores</p></div>
       </div>
     </div>
   </section>
 
-  <!-- ============ AMBIENTES (horizontal scroll) ============ -->
-  <section id="ambientes" class="py-20 bg-ink text-cream overflow-hidden">
-    <div class="px-5 sm:px-8 mb-12 mx-auto max-w-7xl">
-      <p class="text-xs uppercase tracking-[0.3em] text-clay mb-4">Inspiración</p>
-      <h2 class="font-serif font-light text-[clamp(2rem,5vw,4rem)]">Ambientes que abrazan</h2>
-    </div>
+  <!-- ============ AMBIENTES (galería editorial real) ============ -->
+  <section id="ambientes" class="py-28 bg-ink text-cream">
+    <div class="px-5 sm:px-8 mx-auto max-w-7xl">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
+        <div>
+          <p class="reveal text-xs uppercase tracking-[0.3em] text-clay mb-4">Ambientes reales</p>
+          <h2 class="reveal font-serif font-light text-[clamp(2.2rem,5vw,4rem)] leading-[1.02]">Cojines que<br/>abrazan tu espacio.</h2>
+        </div>
+        <p class="reveal max-w-sm text-cream/55 leading-relaxed">Fotos reales de nuestros cojines en casa. Mezcla texturas y tonos
+          para dar carácter a sofás, camas y rincones de lectura.</p>
+      </div>
 
-    <div id="horizTrack" class="flex gap-6 px-5 sm:px-8 w-max">
-      <figure class="panel w-[78vw] sm:w-[48vw] lg:w-[34vw] shrink-0">
-        <div class="aspect-[4/5] rounded-2xl overflow-hidden bg-stone-800">
+      <div class="hover-group grid grid-cols-1 md:grid-cols-12 gap-5">
+        <figure class="reveal hover-card img-zoom md:col-span-7 relative rounded-[1.75rem] overflow-hidden aspect-[4/3]">
           <img src="assets/ambiente-1.jpg" alt="Cojines terracota y verde en dormitorio" class="w-full h-full object-cover" loading="lazy" />
-        </div>
-        <figcaption class="mt-4 flex items-baseline justify-between">
-          <span class="font-serif text-xl">01 · Dormitorio</span>
-          <span class="text-cream/50 text-sm">Terracota & Verde</span>
-        </figcaption>
-      </figure>
-      <figure class="panel w-[78vw] sm:w-[48vw] lg:w-[34vw] shrink-0">
-        <div class="aspect-[4/5] rounded-2xl overflow-hidden bg-stone-800">
-          <img src="assets/ambiente-2.jpg" alt="Cojines beige y crema bouclé" class="w-full h-full object-cover" loading="lazy" />
-        </div>
-        <figcaption class="mt-4 flex items-baseline justify-between">
-          <span class="font-serif text-xl">02 · Sala minimalista</span>
-          <span class="text-cream/50 text-sm">Beige & Crema</span>
-        </figcaption>
-      </figure>
-      <figure class="panel w-[78vw] sm:w-[48vw] lg:w-[34vw] shrink-0">
-        <div class="aspect-[4/5] rounded-2xl overflow-hidden bg-stone-800">
+          <div class="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent"></div>
+          <figcaption class="absolute bottom-6 left-6">
+            <span class="block font-serif text-2xl">Dormitorio cálido</span>
+            <span class="text-cream/70 text-sm uppercase tracking-wider">Terracota & Verde Bosque</span>
+          </figcaption>
+        </figure>
+        <figure class="reveal hover-card img-zoom md:col-span-5 relative rounded-[1.75rem] overflow-hidden aspect-[4/3]">
           <img src="assets/ambiente-3.jpg" alt="Cojines verde lima y crema bouclé" class="w-full h-full object-cover" loading="lazy" />
-        </div>
-        <figcaption class="mt-4 flex items-baseline justify-between">
-          <span class="font-serif text-xl">03 · Acento moderno</span>
-          <span class="text-cream/50 text-sm">Lima & Crema</span>
-        </figcaption>
-      </figure>
+          <div class="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent"></div>
+          <figcaption class="absolute bottom-6 left-6">
+            <span class="block font-serif text-2xl">Acento moderno</span>
+            <span class="text-cream/70 text-sm uppercase tracking-wider">Lima & Crema Bouclé</span>
+          </figcaption>
+        </figure>
+        <figure class="reveal hover-card img-zoom md:col-span-12 relative rounded-[1.75rem] overflow-hidden aspect-[16/7]">
+          <img src="assets/ambiente-2.jpg" alt="Cojines beige y crema bouclé en sala" class="w-full h-full object-cover object-center" loading="lazy" />
+          <div class="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent"></div>
+          <figcaption class="absolute bottom-6 left-6">
+            <span class="block font-serif text-2xl">Sala minimalista</span>
+            <span class="text-cream/70 text-sm uppercase tracking-wider">Beige Arena & Crema Bouclé</span>
+          </figcaption>
+        </figure>
+      </div>
     </div>
   </section>
 
   <!-- ============ CONTACTO ============ -->
-  <section id="contacto" class="py-32 px-5 sm:px-8">
-    <div class="mx-auto max-w-4xl text-center">
-      <p class="reveal text-xs uppercase tracking-[0.3em] text-clay mb-6">Hablemos</p>
-      <h2 class="reveal font-serif font-light text-[clamp(2.5rem,7vw,5.5rem)] leading-[0.95]">
-        Lleva Habitando<br />a tu espacio.
-      </h2>
-      <p class="reveal mt-8 text-ink/60 text-lg max-w-xl mx-auto">
-        Atendemos clientes finales, decoradores e interioristas, y pedidos al por
-        mayor. Escríbenos y armamos tu pedido a medida.
-      </p>
-      <div class="reveal mt-10 flex flex-col sm:flex-row justify-center gap-4">
-        <a id="waBtnBottom" href="#" target="_blank" rel="noopener"
-           class="rounded-full bg-[#1FA855] text-white px-8 py-4 font-medium hover:brightness-95 transition inline-flex items-center justify-center gap-2">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.518 5.26l-.999 3.648 3.741-.982z"/></svg>
-          Escribir por WhatsApp
-        </a>
-        <a href="mailto:hola@iloremstudio.com" class="rounded-full border border-ink/20 px-8 py-4 hover:border-ink transition inline-flex items-center justify-center">
-          Escribir por correo
-        </a>
+  <section id="contacto" class="py-28 px-5 sm:px-8">
+    <div class="mx-auto max-w-7xl">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <!-- Info -->
+        <div>
+          <p class="reveal text-xs uppercase tracking-[0.3em] text-clay mb-6">Hablemos</p>
+          <h2 class="reveal font-serif font-light text-[clamp(2.4rem,5.5vw,4.5rem)] leading-[0.98]">
+            Lleva Habitando<br />a tu espacio.
+          </h2>
+          <p class="reveal mt-7 text-ink/60 text-lg max-w-md">
+            Atendemos clientes finales, decoradores e interioristas, y pedidos al
+            por mayor. Escríbenos y armamos tu pedido a medida.
+          </p>
+
+          <!-- Acciones -->
+          <div class="reveal mt-9 flex flex-wrap gap-3">
+            <a id="waBtnBottom" href="#" target="_blank" rel="noopener"
+               class="rounded-full bg-[#25D366] text-white px-7 py-4 font-medium hover:brightness-95 inline-flex items-center gap-2">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.518 5.26l-.999 3.648 3.741-.982z"/></svg>
+              WhatsApp
+            </a>
+            <a href="mailto:filidaconsuelo@gmail.com" class="rounded-full border border-ink/20 px-7 py-4 font-medium hover:border-ink hover:bg-ink hover:text-cream inline-flex items-center gap-2">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+              Correo
+            </a>
+          </div>
+
+          <!-- Datos -->
+          <div class="reveal mt-10 space-y-4 text-ink/70">
+            <a href="https://maps.google.com/maps?q=Santiago+de+Surco+147+Lima" target="_blank" rel="noopener" class="flex items-start gap-3 hover:text-clay">
+              <svg class="mt-0.5 shrink-0" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>Calle Saturno 147 · Santiago de Surco · Lima, Perú</span>
+            </a>
+            <a id="waPhone" href="https://wa.me/51953363930" target="_blank" rel="noopener" class="flex items-center gap-3 hover:text-clay">
+              <svg class="shrink-0" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <span>+51 953 363 930</span>
+            </a>
+          </div>
+
+          <!-- Redes -->
+          <div class="reveal mt-9">
+            <p class="text-xs uppercase tracking-[0.24em] text-ink/40 mb-4">Síguenos</p>
+            <div class="flex gap-3">
+              <a href="#" aria-label="Instagram" class="social w-12 h-12 rounded-full flex items-center justify-center text-white hover:-translate-y-1" style="background:radial-gradient(circle at 30% 110%,#fdf497 0,#fd5949 45%,#d6249f 60%,#285AEB 90%)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+              </a>
+              <a href="#" aria-label="Facebook" class="social w-12 h-12 rounded-full flex items-center justify-center text-white hover:-translate-y-1" style="background:#1877F2">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z"/></svg>
+              </a>
+              <a href="#" aria-label="TikTok" class="social w-12 h-12 rounded-full flex items-center justify-center text-white hover:-translate-y-1" style="background:#010101">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 5.5a4.5 4.5 0 0 1-1-2.9h-3.2v12.2a2.4 2.4 0 1 1-2.4-2.4c.2 0 .5 0 .7.1V9.2a5.7 5.7 0 0 0-.7 0 5.6 5.6 0 1 0 5.6 5.6V8.6a7.5 7.5 0 0 0 4.3 1.4V6.8a4.5 4.5 0 0 1-3.3-1.3z"/></svg>
+              </a>
+              <a href="https://wa.me/51953363930" target="_blank" rel="noopener" aria-label="WhatsApp" class="social w-12 h-12 rounded-full flex items-center justify-center text-white hover:-translate-y-1" style="background:#25D366">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.518 5.26l-.999 3.648 3.741-.982z"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mapa -->
+        <div class="reveal rounded-[2rem] overflow-hidden shadow-xl aspect-[4/3] lg:aspect-auto lg:h-[520px] bg-sand">
+          <iframe title="Ubicación Habitando — Santiago de Surco, Lima" class="w-full h-full" style="border:0;filter:grayscale(.2) contrast(1.05)"
+            loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            src="https://maps.google.com/maps?q=Calle%20Saturno%20147%20Santiago%20de%20Surco%20Lima&z=15&output=embed"></iframe>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- ============ FOOTER ============ -->
-  <footer class="border-t border-ink/10 py-12 px-5 sm:px-8">
-    <div class="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-ink/50">
-      <div class="text-center md:text-left">
-        <p class="font-serif text-lg text-ink">Habitando</p>
-        <p class="text-xs uppercase tracking-[0.24em]">by Iloremstudio</p>
+  <footer class="border-t border-ink/10 pt-14 pb-10 px-5 sm:px-8">
+    <div class="mx-auto max-w-7xl grid md:grid-cols-3 gap-10 mb-10">
+      <div>
+        <p class="font-serif text-2xl text-ink">Habitando</p>
+        <p class="text-xs uppercase tracking-[0.28em] text-ink/45 mt-1">by Iloremstudio</p>
+        <p class="mt-4 text-sm text-ink/55 max-w-xs">Cojines de diseño en bouclé y chenille. Confort hecho arte, desde Lima.</p>
+        <a href="assets/catalogo-habitando.pdf" download class="mt-5 inline-flex items-center gap-2 text-sm font-medium text-ink hover:text-clay">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+          Descargar catálogo (PDF)
+        </a>
       </div>
-      <div class="flex gap-6">
-        <a href="#" class="hover:text-clay transition">Instagram</a>
-        <a href="#" class="hover:text-clay transition">Facebook</a>
-        <a href="#contacto" class="hover:text-clay transition">Contacto</a>
+      <div class="text-sm text-ink/60 space-y-2">
+        <p class="text-xs uppercase tracking-[0.24em] text-ink/40 mb-3">Navega</p>
+        <a href="#coleccion" class="block hover:text-clay w-fit">Colección</a>
+        <a href="#configurador" class="block hover:text-clay w-fit">Personaliza</a>
+        <a href="#materiales" class="block hover:text-clay w-fit">Materiales</a>
+        <a href="#ambientes" class="block hover:text-clay w-fit">Ambientes</a>
+        <a href="#contacto" class="block hover:text-clay w-fit">Contacto</a>
       </div>
-      <p>© <span id="year"></span> Habitando · Iloremstudio. Todos los derechos reservados.</p>
+      <div class="text-sm text-ink/60 space-y-2">
+        <p class="text-xs uppercase tracking-[0.24em] text-ink/40 mb-3">Contacto</p>
+        <p>Calle Saturno 147 · Santiago de Surco · Lima, Perú</p>
+        <a href="https://wa.me/51953363930" class="block hover:text-clay w-fit">+51 953 363 930</a>
+        <a href="mailto:filidaconsuelo@gmail.com" class="block hover:text-clay w-fit">filidaconsuelo@gmail.com</a>
+        <div class="flex gap-2.5 pt-3">
+          <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-full flex items-center justify-center text-white hover:-translate-y-0.5" style="background:radial-gradient(circle at 30% 110%,#fdf497 0,#fd5949 45%,#d6249f 60%,#285AEB 90%)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+          <a href="#" aria-label="Facebook" class="w-9 h-9 rounded-full flex items-center justify-center text-white hover:-translate-y-0.5" style="background:#1877F2"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z"/></svg></a>
+          <a href="https://wa.me/51953363930" aria-label="WhatsApp" class="w-9 h-9 rounded-full flex items-center justify-center text-white hover:-translate-y-0.5" style="background:#25D366"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.518 5.26l-.999 3.648 3.741-.982z"/></svg></a>
+        </div>
+      </div>
     </div>
-    <!-- Crédito requerido por la licencia CC-BY del modelo 3D. Quítalo si usas tu propio modelo. -->
-    <p id="modelCredit" class="hidden mx-auto max-w-7xl mt-6 text-[11px] text-ink/35">
-      Modelo 3D «almohada/pillow» por
-      <a href="https://sketchfab.com/el_blase" target="_blank" rel="noopener nofollow" class="underline hover:text-ink/60">el_blase</a>,
-      licencia <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener nofollow" class="underline hover:text-ink/60">CC BY 4.0</a>.
-    </p>
+    <div class="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-4 pt-8 border-t border-ink/10 text-xs text-ink/45">
+      <p>© <span id="year"></span> Habitando · Iloremstudio. Todos los derechos reservados.</p>
+      <!-- Crédito requerido por la licencia CC-BY del modelo 3D. Quítalo si usas tu propio modelo. -->
+      <p id="modelCredit" class="hidden text-ink/35">
+        Modelo 3D «almohada/pillow» por
+        <a href="https://sketchfab.com/el_blase" target="_blank" rel="noopener nofollow" class="underline hover:text-ink/60">el_blase</a>,
+        <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener nofollow" class="underline hover:text-ink/60">CC BY 4.0</a>.
+      </p>
+    </div>
   </footer>
 
   <!-- ============ SCRIPT ============ -->
@@ -479,15 +602,16 @@
       r = Math.round((t - r) * a + r); g = Math.round((t - g) * a + g); b = Math.round((t - b) * a + b);
       return '#' + (0x1000000 + (r << 16) + (g << 8) + b).toString(16).slice(1);
     }
-    function cushionSVG(v, id) {
+    function cushionSVG(v, id, boost) {
       const hex = v.hex, light = shade(hex, 0.13), dark = shade(hex, -0.30), dark2 = shade(hex, -0.52);
       const nub = v.texture === 'Bouclé';                 // bouclé = nudoso, chenille = aterciopelado
-      const freq = nub ? '0.09' : '0.03 0.42';            // frecuencia del tejido
+      // 'boost' = textura más marcada (para la paleta: ver mejor la tela)
+      const freq = nub ? (boost ? '0.11' : '0.09') : (boost ? '0.04 0.5' : '0.03 0.42');
       const oct  = nub ? 3 : 2;
-      const ss   = nub ? 1.9 : 0.85;                      // surfaceScale del relieve
+      const ss   = nub ? (boost ? 2.6 : 1.9) : (boost ? 1.5 : 0.85);
       const dc   = 0.85;
-      const mulOp = nub ? 0.5 : 0.38;                     // textura (multiply: huecos del tejido)
-      const hiOp  = nub ? 0.10 : 0.22;                    // brillo de los bumps / pelo
+      const mulOp = nub ? (boost ? 0.62 : 0.5) : (boost ? 0.5 : 0.38);
+      const hiOp  = nub ? (boost ? 0.16 : 0.10) : (boost ? 0.34 : 0.22);
       const P = CUSHION_PATH;
       return (
         '<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" style="overflow:visible" role="img" aria-label="Cojín ' + v.name + '">' +
@@ -561,7 +685,7 @@
     });
 
     /* ---------- Visor 3D (model-viewer) ---------- */
-    const GLB_SRC = 'assets/3d/cojin.glb';
+    const GLB_SRC = 'assets/3d/cojin3.glb'; // cojín con normal map de tela (relieve real)
     const mv = document.getElementById('cushion3d');
     const badge3d = document.getElementById('badge3d');
     let use3D = false, modelReady = false;
@@ -571,18 +695,23 @@
       const n = parseInt(hex.slice(1), 16);
       return [srgbToLinear((n >> 16) & 255), srgbToLinear((n >> 8) & 255), srgbToLinear(n & 255), 1];
     }
-    function applyColorToModel(key) {
-      if (!modelReady || !mv.model) return;
-      const factor = hexLinear(VARIANTS[key].hex);
-      mv.model.materials.forEach((m) => {
-        try { m.pbrMetallicRoughness.setBaseColorFactor(factor); } catch (e) {}
+    // Rugosidad por textura: bouclé = mate/nudoso, chenille = ligero brillo aterciopelado
+    const ROUGH = { 'Bouclé': 0.95, 'Chenille': 0.55 };
+    function styleViewer(viewer, key) {
+      if (!viewer.model) return;
+      const v = VARIANTS[key], f = hexLinear(v.hex);
+      viewer.model.materials.forEach((m) => {
+        try {
+          const pbr = m.pbrMetallicRoughness;
+          // quita el patrón multicolor del modelo, conserva el normal map (relieve de tela)
+          if (pbr.baseColorTexture && pbr.baseColorTexture.texture) pbr.baseColorTexture.setTexture(null);
+          pbr.setBaseColorFactor(f);
+          pbr.setRoughnessFactor(ROUGH[v.texture] != null ? ROUGH[v.texture] : 0.7);
+          pbr.setMetallicFactor(0);
+        } catch (e) {}
       });
     }
-    function recolorViewer(viewer, key) {
-      if (!viewer.model) return;
-      const f = hexLinear(VARIANTS[key].hex);
-      viewer.model.materials.forEach((m) => { try { m.pbrMetallicRoughness.setBaseColorFactor(f); } catch (e) {} });
-    }
+    const recolorViewer = styleViewer;
     function enable3D() {
       use3D = true;
       // --- Configurador (stage) ---
@@ -702,6 +831,25 @@
       document.getElementById('waBtnBottom').href = href;
     }
 
+
+    /* ---------- Paleta de la colección ---------- */
+    const paletteWrap = document.getElementById('palette');
+    if (paletteWrap) {
+      Object.entries(VARIANTS).forEach(([key, v]) => {
+        const c = document.createElement('button');
+        c.className = 'hover-card text-left rounded-2xl bg-sand p-3 sm:p-4';
+        c.innerHTML =
+          '<div class="aspect-square flex items-center justify-center">' + cushionSVG(v, 'p' + (++renderId), true) + '</div>' +
+          '<p class="mt-2 font-medium text-sm">' + v.name + '</p>' +
+          '<p class="text-xs text-ink/45">' + v.texture + '</p>';
+        c.addEventListener('click', () => {
+          setColor(key);
+          const t = document.getElementById('configurador');
+          if (lenis) lenis.scrollTo(t, { offset: -80 }); else t.scrollIntoView({ behavior: 'smooth' });
+        });
+        paletteWrap.appendChild(c);
+      });
+    }
 
     /* ---------- Init ---------- */
     renderCushion(current.color);
@@ -831,8 +979,7 @@
         start: 'top -60', end: 99999,
         onUpdate: (self) => {
           const nav = document.getElementById('nav');
-          if (self.scroll() > 60) nav.classList.add('bg-cream/85','backdrop-blur-md','shadow-sm');
-          else nav.classList.remove('bg-cream/85','backdrop-blur-md','shadow-sm');
+          nav.classList.toggle('glass', self.scroll() > 40);
         },
       });
 
@@ -847,23 +994,6 @@
             scrollTrigger: { trigger: el, start: 'top 85%' },
           });
         });
-
-        // Horizontal pinned gallery
-        const track = document.getElementById('horizTrack');
-        const section = document.getElementById('ambientes');
-        const getScrollAmount = () => track.scrollWidth - window.innerWidth + 32;
-        if (getScrollAmount() > 0) {
-          gsap.to(track, {
-            x: () => -getScrollAmount(),
-            ease: 'none',
-            scrollTrigger: {
-              trigger: section,
-              start: 'top top',
-              end: () => '+=' + getScrollAmount(),
-              pin: true, scrub: 1, invalidateOnRefresh: true,
-            },
-          });
-        }
       } else {
         gsap.set('.hero-el, .reveal', { opacity: 1, y: 0 });
       }

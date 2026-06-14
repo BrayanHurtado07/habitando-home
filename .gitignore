@@ -1,0 +1,17 @@
+# OS
+.DS_Store
+**/.DS_Store
+
+# Originales pesados (HEIC/JPG fuente) — se mantienen LOCALMENTE, no en el repo
+images/
+
+# Modelos 3D no usados por el sitio (solo se publica cojin3.glb).
+# Se mantienen LOCALMENTE; no se suben al repo ni a producción.
+assets/3d/cojin.glb
+assets/3d/cojin2.glb
+assets/3d/cojines.glb
+assets/3d/cojines2.glb
+
+# Borradores y temporales
+*.log
+_test*.html

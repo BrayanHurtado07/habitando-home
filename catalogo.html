@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Catálogo Habitando</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { margin: 0; font-family: Inter, sans-serif; color: #1C1A17; }
+  .page { width: 210mm; min-height: 297mm; padding: 22mm 20mm; position: relative; page-break-after: always; background: #F7F4EF; }
+  .page:last-child { page-break-after: auto; }
+  h1, h2, h3 { font-family: Fraunces, serif; font-weight: 300; margin: 0; }
+  .clay { color: #BE5A30; }
+  .kicker { text-transform: uppercase; letter-spacing: .3em; font-size: 10px; color: #BE5A30; }
+  .cover { background: #1C1A17; color: #F7F4EF; display: flex; flex-direction: column; justify-content: space-between; }
+  .grid6 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 18px; }
+  .card { background: #fff; border-radius: 16px; padding: 12px; text-align: center; }
+  .card .art { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; background: #EDE7DD; border-radius: 12px; }
+  .card p { margin: 8px 0 0; font-weight: 500; font-size: 13px; }
+  .card span { font-size: 11px; color: #1C1A17aa; }
+  .row { display: flex; gap: 14px; margin-top: 16px; }
+  .box { flex: 1; background: #fff; border-radius: 16px; padding: 18px 20px; }
+  .box.dark { background: #2E3B33; color: #F7F4EF; }
+  .price { font-family: Fraunces, serif; font-size: 40px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  td { padding: 8px 0; border-bottom: 1px solid #1C1A1715; font-size: 14px; }
+  td:last-child { text-align: right; font-weight: 600; }
+  .foot { position: absolute; bottom: 16mm; left: 20mm; right: 20mm; font-size: 11px; color: #1C1A1788; display: flex; justify-content: space-between; }
+</style>
+</head>
+<body>
+  <!-- PORTADA -->
+  <section class="page cover">
+    <div>
+      <p class="kicker" style="color:#BE5A30">Colección de textiles para el hogar</p>
+    </div>
+    <div>
+      <h1 style="font-size:72px; line-height:.95">Confort<br/><i style="font-weight:400">hecho</i> arte.</h1>
+      <p style="max-width:120mm; color:#F7F4EFbb; font-size:15px; margin-top:18px">
+        Cojines de diseño en bouclé y chenille. Texturas premium, colores cálidos y
+        confección artesanal. Catálogo 2026.
+      </p>
+    </div>
+    <div style="display:flex; justify-content:space-between; align-items:flex-end">
+      <div>
+        <p style="font-family:Fraunces,serif; font-size:30px">Habitando</p>
+        <p class="kicker" style="color:#F7F4EF99">by Iloremstudio</p>
+      </div>
+      <p style="font-size:12px; color:#F7F4EF99; text-align:right">Calle Saturno 147 · Santiago de Surco<br/>+51 953 363 930</p>
+    </div>
+  </section>
+
+  <!-- COLORES -->
+  <section class="page">
+    <p class="kicker">La colección</p>
+    <h2 style="font-size:40px; margin-top:6px">Seis tonos, dos texturas</h2>
+    <div class="grid6" id="grid"></div>
+    <div class="row">
+      <div class="box dark">
+        <p class="kicker" style="color:#BE5A30">Textura 01</p>
+        <h3 style="font-size:26px; margin:4px 0 6px">Bouclé</h3>
+        <p style="font-size:13px; color:#F7F4EFbb">Tejido rizado de volumen escultórico, cálido y artesanal. Crema y terracota.</p>
+      </div>
+      <div class="box dark" style="background:#2E4A3C">
+        <p class="kicker" style="color:#E9E1D4">Textura 02</p>
+        <h3 style="font-size:26px; margin:4px 0 6px">Chenille</h3>
+        <p style="font-size:13px; color:#F7F4EFbb">Aterciopelado de caída suave y brillo sutil. Verde, lima, beige y carbón.</p>
+      </div>
+    </div>
+    <div class="foot"><span>Habitando · by Iloremstudio</span><span>habitando.iloremstudio.com</span></div>
+  </section>
+
+  <!-- PRECIOS + CONTACTO -->
+  <section class="page">
+    <p class="kicker">Medidas y precios</p>
+    <h2 style="font-size:40px; margin-top:6px">Mismo precio,<br/>cualquier medida</h2>
+    <div class="row">
+      <div class="box">
+        <table>
+          <tr><td>40 × 40 cm</td><td>S/ 54</td></tr>
+          <tr><td>45 × 45 cm</td><td>S/ 54</td></tr>
+          <tr><td>55 × 55 cm</td><td>S/ 54</td></tr>
+          <tr><td>40 × 60 cm</td><td>S/ 54</td></tr>
+        </table>
+      </div>
+      <div class="box dark" style="display:flex;flex-direction:column;justify-content:center">
+        <p class="kicker" style="color:#BE5A30">Por volumen</p>
+        <p class="price">S/ 50 <span style="font-size:15px; font-family:Inter">c/u</span></p>
+        <p style="font-size:13px; color:#F7F4EFbb">Desde 3 unidades. Combina colores y medidas como quieras.</p>
+      </div>
+    </div>
+    <div class="box" style="margin-top:16px">
+      <h3 style="font-size:22px">Cómo pedir</h3>
+      <p style="font-size:13px; color:#1C1A17aa; margin-top:6px">
+        Apartas con el 50% y pagas el resto contra entrega. Envío a coordinar según
+        destino. Escríbenos por WhatsApp y armamos tu pedido a medida.
+      </p>
+      <p style="margin-top:12px; font-weight:600">WhatsApp +51 953 363 930 · filidaconsuelo@gmail.com</p>
+      <p style="font-size:13px; color:#1C1A17aa">Calle Saturno 147 · Santiago de Surco · Lima</p>
+    </div>
+    <div class="foot"><span>© 2026 Habitando · Iloremstudio</span><span>Confort hecho arte.</span></div>
+  </section>
+
+<script>
+  const VARIANTS={terracota:{name:'Terracota',texture:'Bouclé',hex:'#BE5A30'},crema:{name:'Crema Bouclé',texture:'Bouclé',hex:'#E3DAC9'},verde:{name:'Verde Bosque',texture:'Chenille',hex:'#2E4A3C'},lima:{name:'Verde Lima',texture:'Chenille',hex:'#7E9A34'},beige:{name:'Beige Arena',texture:'Chenille',hex:'#C2AE90'},carbon:{name:'Gris Carbón',texture:'Chenille',hex:'#3B3B3B'}};
+  const P='M 46 56 Q 200 48 354 56 Q 362 200 354 344 Q 200 352 46 344 Q 38 200 46 56 Z';
+  function shade(hex,p){const n=parseInt(hex.slice(1),16);let r=(n>>16)&255,g=(n>>8)&255,b=n&255;const t=p<0?0:255,a=Math.abs(p);r=Math.round((t-r)*a+r);g=Math.round((t-g)*a+g);b=Math.round((t-b)*a+b);return '#'+(0x1000000+(r<<16)+(g<<8)+b).toString(16).slice(1);}
+  function cushionSVG(v,id){const hex=v.hex,light=shade(hex,0.13),dark=shade(hex,-0.30),dark2=shade(hex,-0.52);const nub=v.texture==='Bouclé';const freq=nub?'0.11':'0.04 0.5';const oct=nub?3:2;const ss=nub?2.6:1.5;const mulOp=nub?0.62:0.5;const hiOp=nub?0.16:0.34;
+  return '<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="width:86%;overflow:visible"><defs><radialGradient id="vol'+id+'" cx="46%" cy="32%" r="82%"><stop offset="0%" stop-color="'+light+'"/><stop offset="38%" stop-color="'+hex+'"/><stop offset="100%" stop-color="'+dark+'"/></radialGradient><linearGradient id="vsh'+id+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fff" stop-opacity="0.08"/><stop offset="42%" stop-color="#fff" stop-opacity="0"/><stop offset="100%" stop-color="'+dark2+'" stop-opacity="0.38"/></linearGradient><radialGradient id="cor'+id+'" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="'+dark2+'" stop-opacity="0.45"/><stop offset="100%" stop-color="'+dark2+'" stop-opacity="0"/></radialGradient><filter id="rel'+id+'" x="-15%" y="-15%" width="130%" height="130%"><feTurbulence type="fractalNoise" baseFrequency="'+freq+'" numOctaves="'+oct+'" seed="6" result="n"/><feDiffuseLighting in="n" surfaceScale="'+ss+'" diffuseConstant="0.85" lighting-color="#ffffff" result="l"><feDistantLight azimuth="228" elevation="60"/></feDiffuseLighting><feComposite in="l" in2="SourceAlpha" operator="in"/></filter><filter id="blur'+id+'"><feGaussianBlur stdDeviation="6"/></filter><clipPath id="clip'+id+'"><path d="'+P+'"/></clipPath></defs><ellipse cx="206" cy="372" rx="150" ry="17" fill="#1b140f" opacity="0.30" filter="url(#blur'+id+')"/><path d="'+P+'" fill="url(#vol'+id+')"/><g clip-path="url(#clip'+id+')"><rect width="400" height="400" filter="url(#rel'+id+')" style="mix-blend-mode:multiply" opacity="'+mulOp+'"/><rect width="400" height="400" filter="url(#rel'+id+')" style="mix-blend-mode:screen" opacity="'+hiOp+'"/><rect width="400" height="400" fill="url(#vsh'+id+')"/><ellipse cx="68" cy="70" rx="56" ry="56" fill="url(#cor'+id+')"/><ellipse cx="332" cy="70" rx="56" ry="56" fill="url(#cor'+id+')"/><ellipse cx="332" cy="330" rx="56" ry="56" fill="url(#cor'+id+')"/><ellipse cx="68" cy="330" rx="56" ry="56" fill="url(#cor'+id+')"/></g><path d="'+P+'" fill="none" stroke="'+dark+'" stroke-width="4.5" opacity="0.5"/><path d="'+P+'" fill="none" stroke="'+light+'" stroke-width="1.6" opacity="0.55"/></svg>';}
+  let i=0; const g=document.getElementById('grid');
+  for(const k in VARIANTS){const v=VARIANTS[k];const d=document.createElement('div');d.className='card';d.innerHTML='<div class="art">'+cushionSVG(v,++i)+'</div><p>'+v.name+'</p><span>'+v.texture+'</span>';g.appendChild(d);}
+</script>
+</body>
+</html>
