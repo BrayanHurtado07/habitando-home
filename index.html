@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>document.documentElement.classList.add('js');</script>
+
+  <!-- ============ SEO & SOCIAL ============ -->
+  <title>Habitando · Cojines de diseño premium | by Iloremstudio</title>
+  <meta name="description" content="Habitando — cojines decorativos de diseño en bouclé y chenille. Texturas premium, colores cálidos y confort hecho arte. Pedidos por WhatsApp." />
+  <meta name="theme-color" content="#1C1A17" />
+  <link rel="canonical" href="https://habitando.iloremstudio.com/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Habitando · Cojines de diseño premium" />
+  <meta property="og:description" content="Texturas premium en bouclé y chenille. Confort hecho arte." />
+  <meta property="og:image" content="https://habitando.iloremstudio.com/assets/ambiente-2.jpg" />
+  <meta property="og:locale" content="es_PE" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- ============ FONTS ============ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- ============ LIBS (no-build) ============ -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script>
+  <!-- Visor 3D (glTF/GLB) — Google model-viewer -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream:   '#F7F4EF',
+            sand:    '#E9E1D4',
+            ink:     '#1C1A17',
+            clay:    '#C0643E',
+            forest:  '#2E3B33',
+          },
+          fontFamily: {
+            serif: ['Fraunces', 'Georgia', 'serif'],
+            sans:  ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    html { scroll-behavior: auto; }
+    body { -webkit-font-smoothing: antialiased; }
+
+    /* Lenis smooth scroll */
+    html.lenis, html.lenis body { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto !important; }
+
+    .cushion {
+      transition: filter .4s ease;
+      will-change: transform, opacity;
+      filter: drop-shadow(0 40px 60px rgba(28,26,23,.28));
+    }
+    /* Etiquetas orbitando en el hero */
+    @keyframes orbitSpin  { to { transform: rotate(360deg); } }
+    @keyframes orbitSpinR { from { transform: translate(-50%,-50%) rotate(0deg); }
+                            to   { transform: translate(-50%,-50%) rotate(-360deg); } }
+    #heroOrbit { animation: orbitSpin 24s linear infinite; transform-origin: 50% 50%; }
+    .orbit-slot { position: absolute; left: 50%; top: 50%; width: 0; height: 0;
+      transform: rotate(var(--a)) translateY(-150px) rotate(calc(var(--a) * -1)); }
+    .orbit-chip { position: absolute; left: 0; top: 0; white-space: nowrap;
+      transform: translate(-50%, -50%); animation: orbitSpinR 24s linear infinite; }
+    @media (prefers-reduced-motion: reduce) { #heroOrbit, .orbit-chip { animation: none; } }
+
+    .swatch { transition: transform .25s cubic-bezier(.2,.9,.3,1), box-shadow .25s ease; }
+    .swatch[aria-pressed="true"] { transform: scale(1.12); }
+    .swatch[aria-pressed="true"]::after {
+      content: ''; position: absolute; inset: -6px; border-radius: 9999px;
+      border: 1.5px solid currentColor;
+    }
+
+    /* Solo ocultamos para animar si JS está activo; sin JS el contenido se ve igual */
+    html.js .reveal { opacity: 0; transform: translateY(24px); }
+
+    /* hide native scrollbar inside horizontal track on touch */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    .marquee { animation: marquee 28s linear infinite; }
+    @keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+
+    @media (prefers-reduced-motion: reduce) {
+      .marquee { animation: none; }
+      .reveal { opacity: 1 !important; transform: none !important; }
+    }
+  </style>
+</head>
+
+<body class="bg-cream text-ink font-sans overflow-x-hidden antialiased selection:bg-clay selection:text-cream">
+
+  <!-- ============ HEADER ============ -->
+  <header id="nav" class="fixed top-0 inset-x-0 z-50 transition-all duration-500">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8 h-20 flex items-center justify-between">
+      <a href="#top" class="leading-none">
+        <span class="block font-serif text-2xl font-semibold tracking-tight">Habitando</span>
+        <span class="block text-[10px] uppercase tracking-[0.28em] text-ink/50">by Iloremstudio</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-9 text-sm">
+        <a href="#coleccion" class="hover:text-clay transition-colors">Colección</a>
+        <a href="#configurador" class="hover:text-clay transition-colors">Personaliza</a>
+        <a href="#materiales" class="hover:text-clay transition-colors">Materiales</a>
+        <a href="#ambientes" class="hover:text-clay transition-colors">Ambientes</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        <a href="#contacto" class="hidden sm:inline-flex rounded-full bg-ink text-cream text-sm px-5 py-2.5 hover:bg-clay transition-colors">
+          Pedir catálogo
+        </a>
+        <button id="cartBtn" aria-label="Abrir carrito" class="relative rounded-full border border-ink/20 w-11 h-11 flex items-center justify-center hover:border-ink transition-colors">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          <span id="cartCount" class="hidden absolute -top-1 -right-1 bg-clay text-cream text-[10px] font-bold rounded-full min-w-[18px] h-[18px] px-1 flex items-center justify-center">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ CARRITO (drawer) ============ -->
+  <div id="cartOverlay" class="fixed inset-0 z-[60] bg-ink/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300"></div>
+  <aside id="cartDrawer" class="fixed top-0 right-0 z-[70] h-full w-full max-w-md bg-cream shadow-2xl translate-x-full transition-transform duration-400 ease-out flex flex-col" aria-label="Carrito de compra">
+    <div class="flex items-center justify-between px-6 py-5 border-b border-ink/10">
+      <h3 class="font-serif text-2xl">Tu carrito</h3>
+      <button id="cartClose" aria-label="Cerrar" class="w-9 h-9 rounded-full hover:bg-sand flex items-center justify-center transition-colors">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div id="cartItems" class="flex-1 overflow-y-auto px-6 py-4 space-y-4"></div>
+    <div id="cartEmpty" class="flex-1 flex flex-col items-center justify-center text-center px-6 text-ink/40 gap-3">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      <p class="text-sm">Tu carrito está vacío.<br/>Personaliza un cojín y añádelo.</p>
+    </div>
+    <div id="cartFooter" class="hidden border-t border-ink/10 px-6 py-5 space-y-4">
+      <div id="bulkNote" class="hidden text-xs text-clay font-medium bg-clay/10 rounded-lg px-3 py-2"></div>
+      <div class="flex items-center justify-between">
+        <span class="text-ink/60">Total (<span id="cartUnits">0</span> uds.)</span>
+        <span class="font-serif text-3xl">S/ <span id="cartTotal">0</span></span>
+      </div>
+      <a id="cartCheckout" href="#" target="_blank" rel="noopener" class="w-full rounded-full bg-[#1FA855] text-white py-4 font-medium hover:brightness-95 transition flex items-center justify-center gap-2">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.518 5.26l-.999 3.648 3.741-.982z"/></svg>
+        Finalizar pedido por WhatsApp
+      </a>
+      <p class="text-[11px] text-ink/40 text-center">Apartas con 50% · resto contra entrega · envío a coordinar</p>
+    </div>
+  </aside>
+
+  <!-- ============ HERO ============ -->
+  <section id="top" class="relative min-h-[100svh] flex items-center pt-24 pb-16 px-5 sm:px-8">
+    <div class="mx-auto max-w-7xl w-full grid lg:grid-cols-12 gap-10 items-center">
+      <div class="lg:col-span-7">
+        <p class="hero-el reveal text-xs uppercase tracking-[0.3em] text-clay mb-6">Colección de textiles para el hogar</p>
+        <h1 class="hero-el reveal font-serif font-light leading-[0.95] text-[clamp(3rem,9vw,7.5rem)] tracking-tight">
+          Confort<br /><span class="italic font-normal">hecho</span> arte.
+        </h1>
+        <p class="hero-el reveal mt-8 max-w-md text-ink/65 text-lg leading-relaxed">
+          Cojines de diseño en bouclé y chenille. Texturas que se sienten,
+          colores que abrazan tus espacios. Cada pieza, confeccionada para durar.
+        </p>
+        <div class="hero-el reveal mt-10 flex flex-wrap items-center gap-4">
+          <a href="#configurador" class="group rounded-full bg-ink text-cream px-7 py-4 text-sm font-medium hover:bg-clay transition-colors inline-flex items-center gap-2">
+            Personaliza el tuyo
+            <span class="transition-transform group-hover:translate-x-1">→</span>
+          </a>
+          <a href="#coleccion" class="rounded-full border border-ink/20 px-7 py-4 text-sm hover:border-ink transition-colors">
+            Ver colección
+          </a>
+        </div>
+      </div>
+
+      <div class="lg:col-span-5 relative">
+        <div class="hero-el reveal relative aspect-[4/5] rounded-[2rem] overflow-hidden bg-gradient-to-b from-sand to-[#dfd4c2]">
+          <!-- Cojín 3D girando (se activa si hay GLB; si no, imagen) -->
+          <model-viewer id="heroViewer" class="hidden w-full h-full" camera-controls
+            auto-rotate rotation-per-second="26deg" interaction-prompt="none" disable-zoom
+            disable-tap exposure="1.05" shadow-intensity="1.2" shadow-softness="1"
+            environment-image="neutral" camera-orbit="0deg 80deg 105%" style="background:transparent"></model-viewer>
+          <img id="heroImg" src="assets/ambiente-2.jpg" alt="Cojines Habitando en bouclé y chenille"
+               class="w-full h-full object-cover" loading="eager" />
+          <div id="heroImgScrim" class="absolute inset-0 bg-gradient-to-t from-ink/20 to-transparent"></div>
+          <!-- Etiquetas orbitando alrededor del cojín -->
+          <div id="heroOrbit" class="hidden pointer-events-none absolute inset-0">
+            <div class="orbit-slot" style="--a:0deg"><span class="orbit-chip bg-cream/90 backdrop-blur shadow-lg rounded-full px-4 py-2 text-xs font-medium">↻ 360° real</span></div>
+            <div class="orbit-slot" style="--a:120deg"><span class="orbit-chip bg-cream/90 backdrop-blur shadow-lg rounded-full px-4 py-2 text-xs font-medium">6 colores</span></div>
+            <div class="orbit-slot" style="--a:240deg"><span class="orbit-chip bg-cream/90 backdrop-blur shadow-lg rounded-full px-4 py-2 text-xs font-medium">Bouclé · Chenille</span></div>
+          </div>
+        </div>
+        <div class="hero-el reveal absolute -bottom-5 -left-5 bg-cream rounded-2xl shadow-xl px-5 py-4">
+          <p class="font-serif text-2xl">2 texturas</p>
+          <p class="text-xs text-ink/50 uppercase tracking-wider">Bouclé · Chenille</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-[0.3em] text-ink/40 flex flex-col items-center gap-2">
+      Scroll
+      <span class="w-px h-8 bg-ink/30"></span>
+    </div>
+  </section>
+
+  <!-- ============ MARQUEE STRIP ============ -->
+  <section class="py-6 bg-ink text-cream overflow-hidden">
+    <div class="flex whitespace-nowrap">
+      <div class="marquee flex shrink-0">
+        <span class="font-serif italic text-2xl px-8">Texturas premium</span><span class="px-8 text-2xl text-clay">✦</span>
+        <span class="font-serif italic text-2xl px-8">Relleno antialérgico</span><span class="px-8 text-2xl text-clay">✦</span>
+        <span class="font-serif italic text-2xl px-8">Hecho a mano</span><span class="px-8 text-2xl text-clay">✦</span>
+        <span class="font-serif italic text-2xl px-8">Pedidos al por mayor</span><span class="px-8 text-2xl text-clay">✦</span>
+      </div>
+      <div class="marquee flex shrink-0" aria-hidden="true">
+        <span class="font-serif italic text-2xl px-8">Texturas premium</span><span class="px-8 text-2xl text-clay">✦</span>
+        <span class="font-serif italic text-2xl px-8">Relleno antialérgico</span><span class="px-8 text-2xl text-clay">✦</span>
+        <span class="font-serif italic text-2xl px-8">Hecho a mano</span><span class="px-8 text-2xl text-clay">✦</span>
+        <span class="font-serif italic text-2xl px-8">Pedidos al por mayor</span><span class="px-8 text-2xl text-clay">✦</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COLECCION / INTRO ============ -->
+  <section id="coleccion" class="py-28 px-5 sm:px-8">
+    <div class="mx-auto max-w-7xl grid lg:grid-cols-12 gap-10">
+      <div class="lg:col-span-5">
+        <p class="reveal text-xs uppercase tracking-[0.3em] text-clay mb-5">La colección</p>
+        <h2 class="reveal font-serif font-light text-[clamp(2.2rem,5vw,4rem)] leading-[1.05]">
+          Seis tonos.<br />Dos tactos.<br />Infinitas combinaciones.
+        </h2>
+      </div>
+      <div class="lg:col-span-7 lg:pt-16">
+        <p class="reveal text-ink/65 text-lg leading-relaxed max-w-xl">
+          Diseñamos cada cojín para que sea protagonista o acompañante. El
+          <em class="text-ink">bouclé</em> aporta volumen y carácter; el
+          <em class="text-ink">chenille</em>, una caída suave y aterciopelada.
+          Elige tu paleta y deja que tus espacios respiren.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONFIGURADOR INTERACTIVO ============ -->
+  <section id="configurador" class="py-10 px-5 sm:px-8">
+    <div class="mx-auto max-w-7xl grid lg:grid-cols-2 gap-12 items-center">
+
+      <!-- Stage -->
+      <div class="relative">
+        <div id="stage" class="relative aspect-square rounded-[2.5rem] flex items-center justify-center overflow-hidden bg-sand transition-colors duration-700">
+          <!-- Visor 3D real (se activa si existe assets/3d/cojin.glb) -->
+          <model-viewer id="cushion3d" class="hidden absolute inset-0 w-full h-full"
+            camera-controls touch-action="pan-y" auto-rotate rotation-per-second="18deg"
+            interaction-prompt="none" disable-tap exposure="1.05" shadow-intensity="1.1"
+            shadow-softness="0.9" environment-image="neutral" camera-orbit="0deg 78deg auto"
+            min-camera-orbit="auto 55deg auto" max-camera-orbit="auto 95deg auto"
+            ar ar-modes="webxr scene-viewer quick-look" style="background:transparent"></model-viewer>
+          <!-- Fallback: cojín dibujado como SVG (o render PNG si existe) -->
+          <div id="cushionArt" class="cushion w-[74%] max-w-[440px]"></div>
+          <span id="sizeBadge" class="absolute bottom-6 left-6 z-10 text-xs uppercase tracking-[0.2em] text-ink/50 bg-cream/80 backdrop-blur px-3 py-1.5 rounded-full pointer-events-none">55 × 55 cm</span>
+          <span id="badge3d" class="hidden absolute top-6 right-6 z-10 text-xs uppercase tracking-[0.18em] text-ink/50 bg-cream/80 backdrop-blur px-3 py-1.5 rounded-full pointer-events-none">↻ Arrástralo · 360°</span>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div>
+        <p class="text-xs uppercase tracking-[0.3em] text-clay mb-3">Personaliza en tiempo real</p>
+        <h2 class="font-serif font-light text-[clamp(2rem,4vw,3.25rem)] leading-tight">
+          <span id="variantName">Terracota</span>
+        </h2>
+        <p id="variantTexture" class="mt-2 text-ink/55">Textura Bouclé · relleno de napa antialérgica</p>
+
+        <!-- Color -->
+        <div class="mt-10">
+          <h3 class="text-sm font-medium uppercase tracking-wider text-ink/40 mb-4">1 · Color</h3>
+          <div id="swatches" class="flex flex-wrap gap-5"></div>
+        </div>
+
+        <!-- Size -->
+        <div class="mt-10">
+          <h3 class="text-sm font-medium uppercase tracking-wider text-ink/40 mb-4">2 · Medida</h3>
+          <div id="sizes" class="flex flex-wrap gap-2.5"></div>
+          <p class="mt-3 text-xs text-ink/40">Mismo precio en todas las medidas.</p>
+        </div>
+
+        <!-- Price + CTA -->
+        <div class="mt-12">
+          <div class="flex items-end gap-6 mb-6">
+            <div>
+              <p class="text-xs uppercase tracking-wider text-ink/40">Precio</p>
+              <p class="font-serif text-4xl">S/ <span id="price">54</span> <span class="text-base text-ink/40 font-sans">c/u</span></p>
+              <p class="text-xs text-clay mt-1 font-medium">Desde 3 unidades · S/ 50 c/u</p>
+            </div>
+          </div>
+          <div class="flex flex-wrap items-center gap-3">
+            <button id="addBtn" class="group rounded-full bg-ink text-cream px-7 py-4 text-sm font-medium hover:bg-clay transition inline-flex items-center gap-2">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+              Añadir al carrito
+            </button>
+            <a id="waBtn" href="#" target="_blank" rel="noopener"
+               class="rounded-full border border-ink/20 px-6 py-4 text-sm font-medium hover:border-ink transition inline-flex items-center gap-2">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.518 5.26l-.999 3.648 3.741-.982z"/></svg>
+              Pedir 1 directo
+            </a>
+          </div>
+        </div>
+        <p class="mt-4 text-xs text-ink/40">Apartas con 50%, el resto contra entrega · Envío a coordinar según destino</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MATERIALES ============ -->
+  <section id="materiales" class="py-28 px-5 sm:px-8 mt-10">
+    <div class="mx-auto max-w-7xl">
+      <div class="grid md:grid-cols-2 gap-6">
+        <article class="reveal group rounded-[2rem] bg-ink text-cream p-10 md:p-14 overflow-hidden relative">
+          <p class="text-xs uppercase tracking-[0.3em] text-clay mb-4">Textura 01</p>
+          <h3 class="font-serif text-4xl mb-4">Bouclé</h3>
+          <p class="text-cream/70 max-w-sm leading-relaxed">
+            Tejido rizado de volumen escultórico. Cálido al tacto, resistente y
+            con esa pátina artesanal que da vida a sofás y camas.
+          </p>
+          <ul class="mt-8 space-y-2 text-sm text-cream/60">
+            <li>— Ideal para acentos y contrastes</li>
+            <li>— Fácil mantenimiento</li>
+            <li>— Disponible en crema y terracota</li>
+          </ul>
+        </article>
+        <article class="reveal group rounded-[2rem] bg-forest text-cream p-10 md:p-14 overflow-hidden relative">
+          <p class="text-xs uppercase tracking-[0.3em] text-sand mb-4">Textura 02</p>
+          <h3 class="font-serif text-4xl mb-4">Chenille</h3>
+          <p class="text-cream/70 max-w-sm leading-relaxed">
+            Aterciopelado de caída suave y brillo sutil. Una superficie densa
+            y uniforme que aporta elegancia silenciosa a cualquier ambiente.
+          </p>
+          <ul class="mt-8 space-y-2 text-sm text-cream/60">
+            <li>— Tacto suave y sedoso</li>
+            <li>— Colores profundos y sólidos</li>
+            <li>— Verde, lima, beige y carbón</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ AMBIENTES (horizontal scroll) ============ -->
+  <section id="ambientes" class="py-20 bg-ink text-cream overflow-hidden">
+    <div class="px-5 sm:px-8 mb-12 mx-auto max-w-7xl">
+      <p class="text-xs uppercase tracking-[0.3em] text-clay mb-4">Inspiración</p>
+      <h2 class="font-serif font-light text-[clamp(2rem,5vw,4rem)]">Ambientes que abrazan</h2>
+    </div>
+
+    <div id="horizTrack" class="flex gap-6 px-5 sm:px-8 w-max">
+      <figure class="panel w-[78vw] sm:w-[48vw] lg:w-[34vw] shrink-0">
+        <div class="aspect-[4/5] rounded-2xl overflow-hidden bg-stone-800">
+          <img src="assets/ambiente-1.jpg" alt="Cojines terracota y verde en dormitorio" class="w-full h-full object-cover" loading="lazy" />
+        </div>
+        <figcaption class="mt-4 flex items-baseline justify-between">
+          <span class="font-serif text-xl">01 · Dormitorio</span>
+          <span class="text-cream/50 text-sm">Terracota & Verde</span>
+        </figcaption>
+      </figure>
+      <figure class="panel w-[78vw] sm:w-[48vw] lg:w-[34vw] shrink-0">
+        <div class="aspect-[4/5] rounded-2xl overflow-hidden bg-stone-800">
+          <img src="assets/ambiente-2.jpg" alt="Cojines beige y crema bouclé" class="w-full h-full object-cover" loading="lazy" />
+        </div>
+        <figcaption class="mt-4 flex items-baseline justify-between">
+          <span class="font-serif text-xl">02 · Sala minimalista</span>
+          <span class="text-cream/50 text-sm">Beige & Crema</span>
+        </figcaption>
+      </figure>
+      <figure class="panel w-[78vw] sm:w-[48vw] lg:w-[34vw] shrink-0">
+        <div class="aspect-[4/5] rounded-2xl overflow-hidden bg-stone-800">
+          <img src="assets/ambiente-3.jpg" alt="Cojines verde lima y crema bouclé" class="w-full h-full object-cover" loading="lazy" />
+        </div>
+        <figcaption class="mt-4 flex items-baseline justify-between">
+          <span class="font-serif text-xl">03 · Acento moderno</span>
+          <span class="text-cream/50 text-sm">Lima & Crema</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ CONTACTO ============ -->
+  <section id="contacto" class="py-32 px-5 sm:px-8">
+    <div class="mx-auto max-w-4xl text-center">
+      <p class="reveal text-xs uppercase tracking-[0.3em] text-clay mb-6">Hablemos</p>
+      <h2 class="reveal font-serif font-light text-[clamp(2.5rem,7vw,5.5rem)] leading-[0.95]">
+        Lleva Habitando<br />a tu espacio.
+      </h2>
+      <p class="reveal mt-8 text-ink/60 text-lg max-w-xl mx-auto">
+        Atendemos clientes finales, decoradores e interioristas, y pedidos al por
+        mayor. Escríbenos y armamos tu pedido a medida.
+      </p>
+      <div class="reveal mt-10 flex flex-col sm:flex-row justify-center gap-4">
+        <a id="waBtnBottom" href="#" target="_blank" rel="noopener"
+           class="rounded-full bg-[#1FA855] text-white px-8 py-4 font-medium hover:brightness-95 transition inline-flex items-center justify-center gap-2">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.518 5.26l-.999 3.648 3.741-.982z"/></svg>
+          Escribir por WhatsApp
+        </a>
+        <a href="mailto:hola@iloremstudio.com" class="rounded-full border border-ink/20 px-8 py-4 hover:border-ink transition inline-flex items-center justify-center">
+          Escribir por correo
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="border-t border-ink/10 py-12 px-5 sm:px-8">
+    <div class="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-ink/50">
+      <div class="text-center md:text-left">
+        <p class="font-serif text-lg text-ink">Habitando</p>
+        <p class="text-xs uppercase tracking-[0.24em]">by Iloremstudio</p>
+      </div>
+      <div class="flex gap-6">
+        <a href="#" class="hover:text-clay transition">Instagram</a>
+        <a href="#" class="hover:text-clay transition">Facebook</a>
+        <a href="#contacto" class="hover:text-clay transition">Contacto</a>
+      </div>
+      <p>© <span id="year"></span> Habitando · Iloremstudio. Todos los derechos reservados.</p>
+    </div>
+    <!-- Crédito requerido por la licencia CC-BY del modelo 3D. Quítalo si usas tu propio modelo. -->
+    <p id="modelCredit" class="hidden mx-auto max-w-7xl mt-6 text-[11px] text-ink/35">
+      Modelo 3D «almohada/pillow» por
+      <a href="https://sketchfab.com/el_blase" target="_blank" rel="noopener nofollow" class="underline hover:text-ink/60">el_blase</a>,
+      licencia <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener nofollow" class="underline hover:text-ink/60">CC BY 4.0</a>.
+    </p>
+  </footer>
+
+  <!-- ============ SCRIPT ============ -->
+  <script>
+  (function () {
+    'use strict';
+
+    /* ---------- Data ---------- */
+    const WHATSAPP = '51953363930'; // Habitando
+    const PRICE = 54;       // precio unitario S/
+    const PRICE_BULK = 50;  // desde 3 unidades S/
+    const VARIANTS = {
+      terracota: { name: 'Terracota',     texture: 'Bouclé',   hex: '#BE5A30', stage: '#EFE3D6' },
+      crema:     { name: 'Crema Bouclé',  texture: 'Bouclé',   hex: '#E3DAC9', stage: '#F2EDE3' },
+      verde:     { name: 'Verde Bosque',  texture: 'Chenille', hex: '#2E4A3C', stage: '#E2E6DF' },
+      lima:      { name: 'Verde Lima',    texture: 'Chenille', hex: '#7E9A34', stage: '#ECEEDD' },
+      beige:     { name: 'Beige Arena',   texture: 'Chenille', hex: '#C2AE90', stage: '#F0EBE0' },
+      carbon:    { name: 'Gris Carbón',   texture: 'Chenille', hex: '#3B3B3B', stage: '#E6E4E0' },
+    };
+    const SIZES = {
+      '40x40': { label: '40 × 40 cm', short: '40×40', sx: 0.88, sy: 0.88 },
+      '45x45': { label: '45 × 45 cm', short: '45×45', sx: 0.97, sy: 0.97 },
+      '55x55': { label: '55 × 55 cm', short: '55×55', sx: 1.10, sy: 1.10 },
+      '40x60': { label: '40 × 60 cm', short: '40×60', sx: 1.20, sy: 0.80 }, // rectangular
+    };
+
+    let current = { color: 'terracota', size: '55x55' };
+
+    /* ---------- Elements ---------- */
+    const stage        = document.getElementById('stage');
+    const art          = document.getElementById('cushionArt');
+    const swatchesWrap = document.getElementById('swatches');
+    const sizesWrap    = document.getElementById('sizes');
+    const nameEl       = document.getElementById('variantName');
+    const texEl        = document.getElementById('variantTexture');
+    const priceEl      = document.getElementById('price');
+    const sizeBadge    = document.getElementById('sizeBadge');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ---------- Cushion SVG generator (relieve de tela + orejas + vivo) ---------- */
+    // Silueta: orejas salientes en esquinas, bordes casi rectos (el volumen lo da el sombreado)
+    const CUSHION_PATH = 'M 46 56 Q 200 48 354 56 Q 362 200 354 344 Q 200 352 46 344 Q 38 200 46 56 Z';
+    function shade(hex, p) {
+      const n = parseInt(hex.slice(1), 16);
+      let r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+      const t = p < 0 ? 0 : 255, a = Math.abs(p);
+      r = Math.round((t - r) * a + r); g = Math.round((t - g) * a + g); b = Math.round((t - b) * a + b);
+      return '#' + (0x1000000 + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    }
+    function cushionSVG(v, id) {
+      const hex = v.hex, light = shade(hex, 0.13), dark = shade(hex, -0.30), dark2 = shade(hex, -0.52);
+      const nub = v.texture === 'Bouclé';                 // bouclé = nudoso, chenille = aterciopelado
+      const freq = nub ? '0.09' : '0.03 0.42';            // frecuencia del tejido
+      const oct  = nub ? 3 : 2;
+      const ss   = nub ? 1.9 : 0.85;                      // surfaceScale del relieve
+      const dc   = 0.85;
+      const mulOp = nub ? 0.5 : 0.38;                     // textura (multiply: huecos del tejido)
+      const hiOp  = nub ? 0.10 : 0.22;                    // brillo de los bumps / pelo
+      const P = CUSHION_PATH;
+      return (
+        '<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto" style="overflow:visible" role="img" aria-label="Cojín ' + v.name + '">' +
+          '<defs>' +
+            '<radialGradient id="vol' + id + '" cx="46%" cy="32%" r="82%">' +
+              '<stop offset="0%" stop-color="' + light + '"/>' +
+              '<stop offset="38%" stop-color="' + hex + '"/>' +
+              '<stop offset="100%" stop-color="' + dark + '"/>' +
+            '</radialGradient>' +
+            '<linearGradient id="vsh' + id + '" x1="0" y1="0" x2="0" y2="1">' +
+              '<stop offset="0%" stop-color="#fff" stop-opacity="0.08"/>' +
+              '<stop offset="42%" stop-color="#fff" stop-opacity="0"/>' +
+              '<stop offset="100%" stop-color="' + dark2 + '" stop-opacity="0.38"/>' +
+            '</linearGradient>' +
+            '<radialGradient id="cor' + id + '" cx="50%" cy="50%" r="50%">' +
+              '<stop offset="0%" stop-color="' + dark2 + '" stop-opacity="0.45"/>' +
+              '<stop offset="100%" stop-color="' + dark2 + '" stop-opacity="0"/>' +
+            '</radialGradient>' +
+            '<filter id="rel' + id + '" x="-15%" y="-15%" width="130%" height="130%">' +
+              '<feTurbulence type="fractalNoise" baseFrequency="' + freq + '" numOctaves="' + oct + '" seed="6" result="n"/>' +
+              '<feDiffuseLighting in="n" surfaceScale="' + ss + '" diffuseConstant="' + dc + '" lighting-color="#ffffff" result="l">' +
+                '<feDistantLight azimuth="228" elevation="60"/>' +
+              '</feDiffuseLighting>' +
+              '<feComposite in="l" in2="SourceAlpha" operator="in"/>' +
+            '</filter>' +
+            '<filter id="blur' + id + '"><feGaussianBlur stdDeviation="6"/></filter>' +
+            '<clipPath id="clip' + id + '"><path d="' + P + '"/></clipPath>' +
+          '</defs>' +
+          '<ellipse cx="206" cy="372" rx="150" ry="17" fill="#1b140f" opacity="0.30" filter="url(#blur' + id + ')"/>' +
+          '<path d="' + P + '" fill="url(#vol' + id + ')"/>' +
+          '<g clip-path="url(#clip' + id + ')">' +
+            '<rect x="0" y="0" width="400" height="400" filter="url(#rel' + id + ')" style="mix-blend-mode:multiply" opacity="' + mulOp + '"/>' +
+            '<rect x="0" y="0" width="400" height="400" filter="url(#rel' + id + ')" style="mix-blend-mode:screen" opacity="' + hiOp + '"/>' +
+            '<rect x="0" y="0" width="400" height="400" fill="url(#vsh' + id + ')"/>' +
+            '<ellipse cx="68" cy="70" rx="56" ry="56" fill="url(#cor' + id + ')"/>' +
+            '<ellipse cx="332" cy="70" rx="56" ry="56" fill="url(#cor' + id + ')"/>' +
+            '<ellipse cx="332" cy="330" rx="56" ry="56" fill="url(#cor' + id + ')"/>' +
+            '<ellipse cx="68" cy="330" rx="56" ry="56" fill="url(#cor' + id + ')"/>' +
+            '<ellipse cx="178" cy="148" rx="115" ry="88" fill="#fff" opacity="0.05" filter="url(#blur' + id + ')"/>' +
+          '</g>' +
+          '<path d="' + P + '" fill="none" stroke="' + dark + '" stroke-width="4.5" opacity="0.5"/>' +
+          '<path d="' + P + '" fill="none" stroke="' + light + '" stroke-width="1.6" opacity="0.55"/>' +
+          '<g transform="translate(200 200) scale(0.94) translate(-200 -200)">' +
+            '<path d="' + P + '" fill="none" stroke="' + dark + '" stroke-width="1.2" stroke-dasharray="1.5 5" opacity="0.36"/>' +
+          '</g>' +
+        '</svg>'
+      );
+    }
+
+    /* ---------- Build swatches ---------- */
+    Object.entries(VARIANTS).forEach(([key, v]) => {
+      const b = document.createElement('button');
+      b.className = 'swatch relative w-10 h-10 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-ink';
+      b.style.background = v.hex;
+      b.style.color = v.hex;
+      b.setAttribute('aria-label', v.name);
+      b.setAttribute('aria-pressed', key === current.color);
+      b.addEventListener('click', () => setColor(key));
+      swatchesWrap.appendChild(b);
+    });
+
+    /* ---------- Build size buttons ---------- */
+    Object.entries(SIZES).forEach(([key, s]) => {
+      const b = document.createElement('button');
+      b.dataset.size = key;
+      b.className = 'size-btn rounded-full px-5 py-2.5 text-sm font-medium border transition-colors';
+      b.textContent = s.short;
+      b.setAttribute('aria-pressed', key === current.size);
+      b.addEventListener('click', () => setSize(key));
+      sizesWrap.appendChild(b);
+    });
+
+    /* ---------- Visor 3D (model-viewer) ---------- */
+    const GLB_SRC = 'assets/3d/cojin.glb';
+    const mv = document.getElementById('cushion3d');
+    const badge3d = document.getElementById('badge3d');
+    let use3D = false, modelReady = false;
+
+    function srgbToLinear(c) { c /= 255; return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); }
+    function hexLinear(hex) {
+      const n = parseInt(hex.slice(1), 16);
+      return [srgbToLinear((n >> 16) & 255), srgbToLinear((n >> 8) & 255), srgbToLinear(n & 255), 1];
+    }
+    function applyColorToModel(key) {
+      if (!modelReady || !mv.model) return;
+      const factor = hexLinear(VARIANTS[key].hex);
+      mv.model.materials.forEach((m) => {
+        try { m.pbrMetallicRoughness.setBaseColorFactor(factor); } catch (e) {}
+      });
+    }
+    function recolorViewer(viewer, key) {
+      if (!viewer.model) return;
+      const f = hexLinear(VARIANTS[key].hex);
+      viewer.model.materials.forEach((m) => { try { m.pbrMetallicRoughness.setBaseColorFactor(f); } catch (e) {} });
+    }
+    function enable3D() {
+      use3D = true;
+      // --- Configurador (stage) ---
+      mv.src = GLB_SRC;
+      mv.classList.remove('hidden');
+      art.classList.add('hidden');
+      badge3d.classList.remove('hidden');
+      const credit = document.getElementById('modelCredit');
+      if (credit) credit.classList.remove('hidden');
+      if (reduceMotion) mv.removeAttribute('auto-rotate');
+      mv.style.transition = 'transform .5s cubic-bezier(.2,.9,.3,1)';
+      mv.addEventListener('load', () => { modelReady = true; recolorViewer(mv, current.color); applySize(); });
+
+      // --- Hero (cojín girando + cicla colores) ---
+      const hv = document.getElementById('heroViewer');
+      const heroImg = document.getElementById('heroImg');
+      const heroScrim = document.getElementById('heroImgScrim');
+      const heroOrbit = document.getElementById('heroOrbit');
+      if (hv) {
+        hv.src = GLB_SRC;
+        hv.classList.remove('hidden');
+        if (heroImg) heroImg.classList.add('hidden');
+        if (heroScrim) heroScrim.classList.add('hidden');
+        if (heroOrbit) heroOrbit.classList.remove('hidden');
+        if (reduceMotion) hv.removeAttribute('auto-rotate');
+        const keys = Object.keys(VARIANTS);
+        let ci = 0;
+        hv.addEventListener('load', () => {
+          recolorViewer(hv, keys[0]);
+          if (!reduceMotion) setInterval(() => { ci = (ci + 1) % keys.length; recolorViewer(hv, keys[ci]); }, 2800);
+        });
+      }
+    }
+    // Activa el 3D solo si el archivo existe (si no, queda el SVG)
+    fetch(GLB_SRC, { method: 'HEAD' }).then((r) => { if (r.ok) enable3D(); }).catch(() => {});
+
+    /* ---------- Render cushion SVG (fallback, con override PNG opcional) ---------- */
+    let renderId = 0;
+    function renderCushion(key) {
+      const v = VARIANTS[key];
+      art.innerHTML = cushionSVG(v, ++renderId);
+      const probe = new Image();
+      probe.onload = () => {
+        if (current.color === key && !use3D)
+          art.innerHTML = '<img src="assets/renders/cojin-' + key + '.png" alt="Cojín ' + v.name + '" class="w-full h-auto object-contain"/>';
+      };
+      probe.src = 'assets/renders/cojin-' + key + '.png';
+    }
+
+    function setColor(key) {
+      if (!VARIANTS[key]) return;
+      current.color = key;
+      const v = VARIANTS[key];
+
+      document.querySelectorAll('#swatches .swatch').forEach((el) =>
+        el.setAttribute('aria-pressed', el.getAttribute('aria-label') === v.name));
+
+      nameEl.textContent = v.name;
+      texEl.textContent = `Textura ${v.texture} · relleno de napa antialérgica`;
+      stage.style.background = v.stage;
+      updateWhatsApp();
+
+      if (use3D) { recolorViewer(mv, key); return; }
+
+      if (reduceMotion) { renderCushion(key); gsap.set(art, { opacity: 1 }); applySize(); }
+      else {
+        gsap.to(art, {
+          opacity: 0, scale: 0.92, duration: 0.2, ease: 'power2.in',
+          onComplete: () => {
+            renderCushion(key);
+            const s = SIZES[current.size];
+            gsap.to(art, { opacity: 1, scaleX: s.sx, scaleY: s.sy, duration: 0.5, ease: 'back.out(1.4)' });
+          },
+        });
+      }
+    }
+
+    // Aplica la medida a lo que esté activo (visor 3D o SVG)
+    function applySize() {
+      const s = SIZES[current.size];
+      if (use3D) {
+        mv.style.transform = `scale(${s.sx}, ${s.sy})`;
+      } else if (reduceMotion) {
+        gsap.set(art, { scaleX: s.sx, scaleY: s.sy });
+      } else {
+        gsap.to(art, { scaleX: s.sx, scaleY: s.sy, duration: 0.6, ease: 'back.out(1.5)' });
+      }
+    }
+
+    function setSize(key) {
+      if (!SIZES[key]) return;
+      current.size = key;
+      const s = SIZES[key];
+      priceEl.textContent = PRICE;
+      sizeBadge.textContent = s.label;
+
+      document.querySelectorAll('.size-btn').forEach((b) => {
+        const active = b.dataset.size === key;
+        b.setAttribute('aria-pressed', active);
+        b.classList.toggle('bg-ink', active);
+        b.classList.toggle('text-cream', active);
+        b.classList.toggle('border-ink', active);
+        b.classList.toggle('border-ink/15', !active);
+        b.classList.toggle('text-ink/70', !active);
+      });
+
+      applySize();
+      updateWhatsApp();
+    }
+
+    function updateWhatsApp() {
+      const v = VARIANTS[current.color];
+      const s = SIZES[current.size];
+      const msg = `Hola Habitando 👋 Me interesa el cojín *${v.name}* (${v.texture}) en *${s.label}*. ¿Está disponible?\n\n(Vi que es S/ ${PRICE} c/u, y desde 3 unidades S/ ${PRICE_BULK} c/u)`;
+      const href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+      document.getElementById('waBtn').href = href;
+      document.getElementById('waBtnBottom').href = href;
+    }
+
+
+    /* ---------- Init ---------- */
+    renderCushion(current.color);
+    setColor(current.color);
+    setSize(current.size);
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    /* ---------- Lenis smooth scroll ---------- */
+    let lenis;
+    if (!reduceMotion && window.Lenis) {
+      lenis = new Lenis({ duration: 1.1, smoothWheel: true });
+      function raf(t) { lenis.raf(t); requestAnimationFrame(raf); }
+      requestAnimationFrame(raf);
+    }
+
+    /* ---------- Carrito de compra ---------- */
+    const cart = [];
+    const cartBtn = document.getElementById('cartBtn');
+    const cartDrawer = document.getElementById('cartDrawer');
+    const cartOverlay = document.getElementById('cartOverlay');
+    const cartItemsEl = document.getElementById('cartItems');
+    const cartEmptyEl = document.getElementById('cartEmpty');
+    const cartFooterEl = document.getElementById('cartFooter');
+    const cartCountEl = document.getElementById('cartCount');
+    const cartUnitsEl = document.getElementById('cartUnits');
+    const cartTotalEl = document.getElementById('cartTotal');
+    const bulkNoteEl = document.getElementById('bulkNote');
+    const cartCheckout = document.getElementById('cartCheckout');
+
+    const saveCart = () => { try { localStorage.setItem('habitando_cart', JSON.stringify(cart)); } catch (e) {} };
+    const loadCart = () => { try { const d = JSON.parse(localStorage.getItem('habitando_cart') || '[]'); if (Array.isArray(d)) d.forEach((i) => { if (VARIANTS[i.color] && SIZES[i.size]) cart.push(i); }); } catch (e) {} };
+    const totalUnits = () => cart.reduce((n, i) => n + i.qty, 0);
+    const unitPrice = () => (totalUnits() >= 3 ? PRICE_BULK : PRICE);
+
+    function addToCart() {
+      const v = VARIANTS[current.color], sz = SIZES[current.size];
+      const id = current.color + '|' + current.size;
+      const found = cart.find((i) => i.id === id);
+      if (found) found.qty++;
+      else cart.push({ id, color: current.color, size: current.size, name: v.name, texture: v.texture, sizeLabel: sz.label, qty: 1 });
+      saveCart(); renderCart(); openCart(); pulseCart();
+    }
+    function changeQty(id, d) {
+      const it = cart.find((i) => i.id === id); if (!it) return;
+      it.qty += d; if (it.qty <= 0) cart.splice(cart.indexOf(it), 1);
+      saveCart(); renderCart();
+    }
+    function removeItem(id) { const i = cart.findIndex((x) => x.id === id); if (i >= 0) cart.splice(i, 1); saveCart(); renderCart(); }
+
+    function checkoutHref() {
+      const price = unitPrice();
+      let msg = 'Hola Habitando 👋 Quiero hacer este pedido:\n';
+      cart.forEach((it) => { msg += `\n• ${it.qty}× ${it.name} (${it.texture}) — ${it.sizeLabel}`; });
+      msg += `\n\nTotal: ${totalUnits()} cojines × S/ ${price} = *S/ ${price * totalUnits()}*`;
+      msg += '\n\n¿Coordinamos el 50% para apartar? 🙌';
+      return 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(msg);
+    }
+    function renderCart() {
+      const units = totalUnits(), price = unitPrice();
+      if (units > 0) { cartCountEl.textContent = units; cartCountEl.classList.remove('hidden'); }
+      else cartCountEl.classList.add('hidden');
+
+      if (!cart.length) {
+        cartItemsEl.innerHTML = ''; cartItemsEl.classList.add('hidden');
+        cartEmptyEl.classList.remove('hidden'); cartFooterEl.classList.add('hidden');
+        return;
+      }
+      cartItemsEl.classList.remove('hidden'); cartEmptyEl.classList.add('hidden'); cartFooterEl.classList.remove('hidden');
+      cartItemsEl.innerHTML = cart.map((it) =>
+        '<div class="flex gap-4 items-center">' +
+          '<div class="w-16 h-16 rounded-xl bg-sand p-1.5 shrink-0 flex items-center justify-center">' + cushionSVG(VARIANTS[it.color], 'c' + (++renderId)) + '</div>' +
+          '<div class="flex-1 min-w-0">' +
+            '<p class="font-medium truncate">' + it.name + '</p>' +
+            '<p class="text-xs text-ink/50">' + it.texture + ' · ' + it.sizeLabel + '</p>' +
+            '<div class="mt-1.5 inline-flex items-center rounded-full border border-ink/15 text-base">' +
+              '<button class="qty w-7 h-7 flex items-center justify-center hover:bg-sand rounded-l-full" data-id="' + it.id + '" data-d="-1" aria-label="Quitar uno">−</button>' +
+              '<span class="w-7 text-center text-sm">' + it.qty + '</span>' +
+              '<button class="qty w-7 h-7 flex items-center justify-center hover:bg-sand rounded-r-full" data-id="' + it.id + '" data-d="1" aria-label="Agregar uno">+</button>' +
+            '</div>' +
+          '</div>' +
+          '<div class="text-right">' +
+            '<p class="font-medium">S/ ' + (price * it.qty) + '</p>' +
+            '<button class="rm text-xs text-ink/40 hover:text-clay" data-id="' + it.id + '">Quitar</button>' +
+          '</div>' +
+        '</div>').join('');
+      cartItemsEl.querySelectorAll('.qty').forEach((b) => b.onclick = () => changeQty(b.dataset.id, parseInt(b.dataset.d, 10)));
+      cartItemsEl.querySelectorAll('.rm').forEach((b) => b.onclick = () => removeItem(b.dataset.id));
+
+      cartUnitsEl.textContent = units;
+      cartTotalEl.textContent = price * units;
+      if (units >= 3) bulkNoteEl.textContent = '✓ Precio mayorista aplicado: S/ ' + PRICE_BULK + ' c/u';
+      else { const f = 3 - units; bulkNoteEl.textContent = 'Añade ' + f + (f === 1 ? ' cojín más' : ' cojines más') + ' y todos quedan a S/ ' + PRICE_BULK + ' c/u'; }
+      bulkNoteEl.classList.remove('hidden');
+      cartCheckout.href = checkoutHref();
+    }
+    function openCart() { cartDrawer.classList.remove('translate-x-full'); cartOverlay.classList.remove('opacity-0', 'pointer-events-none'); document.body.style.overflow = 'hidden'; if (lenis) lenis.stop(); }
+    function closeCart() { cartDrawer.classList.add('translate-x-full'); cartOverlay.classList.add('opacity-0', 'pointer-events-none'); document.body.style.overflow = ''; if (lenis) lenis.start(); }
+    function pulseCart() { if (!reduceMotion && window.gsap) gsap.fromTo(cartBtn, { scale: 1 }, { scale: 1.18, duration: 0.15, yoyo: true, repeat: 1, ease: 'power2.out' }); }
+
+    document.getElementById('addBtn').addEventListener('click', addToCart);
+    cartBtn.addEventListener('click', openCart);
+    document.getElementById('cartClose').addEventListener('click', closeCart);
+    cartOverlay.addEventListener('click', closeCart);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeCart(); });
+
+    loadCart(); renderCart();
+    // anchor links
+    document.querySelectorAll('a[href^="#"]').forEach((a) => {
+      a.addEventListener('click', (e) => {
+        const id = a.getAttribute('href');
+        if (id.length < 2) return;
+        const target = document.querySelector(id);
+        if (!target) return;
+        e.preventDefault();
+        if (lenis) lenis.scrollTo(target, { offset: -80 });
+        else target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    /* ---------- GSAP animations ---------- */
+    if (window.gsap && window.ScrollTrigger) {
+      gsap.registerPlugin(ScrollTrigger);
+      if (lenis) lenis.on('scroll', ScrollTrigger.update);
+
+      // Header background on scroll
+      ScrollTrigger.create({
+        start: 'top -60', end: 99999,
+        onUpdate: (self) => {
+          const nav = document.getElementById('nav');
+          if (self.scroll() > 60) nav.classList.add('bg-cream/85','backdrop-blur-md','shadow-sm');
+          else nav.classList.remove('bg-cream/85','backdrop-blur-md','shadow-sm');
+        },
+      });
+
+      if (!reduceMotion) {
+        // Hero stagger
+        gsap.to('.hero-el', { opacity: 1, y: 0, duration: 1, ease: 'power3.out', stagger: 0.12, delay: 0.1 });
+
+        // Generic reveals
+        gsap.utils.toArray('.reveal:not(.hero-el)').forEach((el) => {
+          gsap.to(el, {
+            opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 85%' },
+          });
+        });
+
+        // Horizontal pinned gallery
+        const track = document.getElementById('horizTrack');
+        const section = document.getElementById('ambientes');
+        const getScrollAmount = () => track.scrollWidth - window.innerWidth + 32;
+        if (getScrollAmount() > 0) {
+          gsap.to(track, {
+            x: () => -getScrollAmount(),
+            ease: 'none',
+            scrollTrigger: {
+              trigger: section,
+              start: 'top top',
+              end: () => '+=' + getScrollAmount(),
+              pin: true, scrub: 1, invalidateOnRefresh: true,
+            },
+          });
+        }
+      } else {
+        gsap.set('.hero-el, .reveal', { opacity: 1, y: 0 });
+      }
+    }
+  })();
+  </script>
+</body>
+</html>
