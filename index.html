@@ -204,9 +204,10 @@
       <div class="lg:col-span-5 relative">
         <div class="hero-el reveal relative aspect-[4/5] rounded-[2rem] overflow-hidden bg-gradient-to-b from-sand to-[#dfd4c2]">
           <!-- Cojín 3D girando (se activa si hay GLB; si no, imagen) -->
-          <model-viewer id="heroViewer" class="hidden w-full h-full" camera-controls
+          <model-viewer id="heroViewer" class="hidden w-full h-full" camera-controls touch-action="pan-y"
             auto-rotate rotation-per-second="26deg" interaction-prompt="none" disable-zoom
             disable-tap exposure="1.05" shadow-intensity="1.2" shadow-softness="1"
+            min-camera-orbit="auto 60deg auto" max-camera-orbit="auto 95deg auto"
             environment-image="neutral" camera-orbit="0deg 80deg 105%" style="background:transparent"></model-viewer>
           <img id="heroImg" src="assets/ambiente-2.jpg" alt="Cojines Habitando en bouclé y chenille"
                class="w-full h-full object-cover" loading="eager" />
@@ -289,7 +290,7 @@
             camera-controls touch-action="pan-y" auto-rotate rotation-per-second="20deg"
             interaction-prompt="none" exposure="1.05" shadow-intensity="1.15"
             shadow-softness="0.9" environment-image="neutral" camera-orbit="0deg 78deg 100%"
-            min-camera-orbit="auto 5deg 60%" max-camera-orbit="auto 170deg 200%"
+            min-camera-orbit="auto 35deg 70%" max-camera-orbit="auto 105deg 160%"
             ar ar-modes="webxr scene-viewer quick-look" style="background:transparent"></model-viewer>
           <!-- Fallback: cojín dibujado como SVG (o render PNG si existe) -->
           <div id="cushionArt" class="cushion w-[74%] max-w-[440px]"></div>
