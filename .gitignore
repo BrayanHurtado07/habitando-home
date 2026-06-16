@@ -12,6 +12,15 @@ assets/3d/cojin2.glb
 assets/3d/cojines.glb
 assets/3d/cojines2.glb
 
+# Texturas de tela: originales pesados fuera del repo; se publican los JPG optimizados (tela-*.jpg)
+assets/telas/*.png
+# Catálogo de telas: originales sin optimizar fuera del repo; se publican los tela-NN.jpg
+assets/telas/web/*.png
+assets/telas/web/[0-9].jpg
+assets/telas/web/[0-9][0-9].jpg
+
 # Borradores y temporales
 *.log
 _test*.html
+_mv*.html
+_sv*.html
