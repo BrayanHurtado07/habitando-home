@@ -47,38 +47,44 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
+  <!-- ============ ESTILOS (Tailwind compilado, sin CDN en runtime) ============ -->
+  <link rel="stylesheet" href="dist/tailwind.css" />
+
   <!-- ============ LIBS (no-build) ============ -->
-  <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script>
   <!-- Visor 3D (glTF/GLB) — Google model-viewer -->
   <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
 
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            cream:   '#F7F4EF',
-            sand:    '#E9E1D4',
-            ink:     '#1C1A17',
-            clay:    '#C0643E',
-            forest:  '#2E3B33',
-          },
-          fontFamily: {
-            serif: ['Fraunces', 'Georgia', 'serif'],
-            sans:  ['Inter', 'system-ui', 'sans-serif'],
-          },
-        },
-      },
-    };
-  </script>
-
   <style>
     html { scroll-behavior: auto; }
     body { -webkit-font-smoothing: antialiased; }
     model-viewer::part(default-progress-bar) { display: none; }
+
+    /* Carga fantasma (skeleton shimmer) — placeholder elegante mientras carga contenido */
+    .skeleton {
+      position: relative;
+      overflow: hidden;
+      background-color: #E9E1D4; /* sand */
+    }
+    .skeleton::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      transform: translateX(-100%);
+      background: linear-gradient(90deg, transparent, rgba(247,244,239,0.65), transparent);
+      animation: shimmer 1.6s infinite;
+    }
+    .skeleton.is-loaded::after { animation: none; opacity: 0; }
+    .skeleton.is-loaded { background-color: transparent; }
+    @keyframes shimmer { 100% { transform: translateX(100%); } }
+    @media (prefers-reduced-motion: reduce) { .skeleton::after { animation: none; } }
+    /* la imagen aparece con fundido cuando termina de cargar */
+    .skeleton img { opacity: 0; transition: opacity .6s ease; }
+    .skeleton.is-loaded img { opacity: 1; }
+    /* shimmer del escenario 3D: capa de fondo que se desvanece al cargar el modelo */
+    #stageSkeleton { transition: opacity .6s ease; }
 
     /* Preloader */
     #preloader {
@@ -333,16 +339,10 @@
             auto-rotate rotation-per-second="26deg" interaction-prompt="none" disable-zoom
             disable-tap exposure="1.05" shadow-intensity="1.2" shadow-softness="1"
             min-camera-orbit="auto 60deg auto" max-camera-orbit="auto 95deg auto"
-            environment-image="neutral" camera-orbit="0deg 80deg 105%" style="background:transparent; pointer-events: none;"></model-viewer>
-          <div id="heroTouchOverlay" class="absolute inset-0 z-20 md:hidden flex flex-col items-center justify-center bg-ink/5 backdrop-blur-[1px] pointer-events-auto cursor-pointer transition-opacity duration-300">
-            <div class="bg-cream/90 backdrop-blur shadow-lg rounded-full px-5 py-2.5 text-xs font-semibold tracking-wider uppercase text-ink flex items-center gap-2">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m9 9a9 9 0 0 1-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 0 1 9-9"/></svg>
-              Toca para rotar 360°
-            </div>
-          </div>
+            environment-image="neutral" camera-orbit="0deg 80deg 105%" style="background:transparent;"></model-viewer>
           <img id="heroImg" src="assets/ambiente-2.jpg" alt="Cojines Habitando"
-               class="absolute inset-0 w-full h-full object-cover rounded-[2rem] z-20" loading="eager" />
-          <div id="heroImgScrim" class="absolute inset-0 bg-gradient-to-t from-ink/20 to-transparent rounded-[2rem] z-20"></div>
+               class="absolute inset-0 w-full h-full object-cover rounded-[2rem] z-20 transition-opacity duration-700 ease-out" loading="eager" />
+          <div id="heroImgScrim" class="absolute inset-0 bg-gradient-to-t from-ink/20 to-transparent rounded-[2rem] z-20 transition-opacity duration-700 ease-out"></div>
           <!-- Características del cojín, orbitando -->
           <div id="heroOrbit" class="hidden pointer-events-none absolute inset-0 z-20">
             <div class="orbit-slot" style="--a:0deg"><span id="chip1" class="orbit-chip bg-cream/90 backdrop-blur shadow-lg rounded-full px-4 py-2 text-xs font-medium">↻ 360° real</span></div>
@@ -415,21 +415,17 @@
       <!-- Stage -->
       <div class="relative">
         <div id="stage" class="relative aspect-square max-h-[80vh] mx-auto w-full max-w-[500px] lg:max-w-none rounded-[2rem] sm:rounded-[2.5rem] flex items-center justify-center overflow-hidden bg-sand transition-colors duration-700">
+          <!-- Carga fantasma: shimmer de fondo mientras carga el modelo 3D -->
+          <div id="stageSkeleton" class="skeleton absolute inset-0 z-0" aria-hidden="true"></div>
           <!-- Visor 3D real (se activa si existe assets/3d/cojin.glb) -->
           <model-viewer id="cushion3d" class="absolute inset-0 w-full h-full z-10"
             camera-controls touch-action="pan-y" auto-rotate rotation-per-second="20deg"
             interaction-prompt="none" exposure="1.05" shadow-intensity="1.15"
             shadow-softness="0.9" environment-image="neutral" camera-orbit="0deg 78deg 100%"
             min-camera-orbit="auto 35deg 70%" max-camera-orbit="auto 105deg 160%"
-            ar ar-modes="webxr scene-viewer quick-look" style="background:transparent; pointer-events: none;"></model-viewer>
-          <div id="stageTouchOverlay" class="absolute inset-0 z-20 md:hidden flex flex-col items-center justify-center bg-ink/5 backdrop-blur-[1.5px] pointer-events-auto cursor-pointer transition-opacity duration-300">
-            <div class="bg-cream/90 backdrop-blur shadow-lg rounded-full px-5 py-2.5 text-xs font-semibold tracking-wider uppercase text-ink flex items-center gap-2">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m9 9a9 9 0 0 1-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 0 1 9-9"/></svg>
-              Toca para rotar 360°
-            </div>
-          </div>
+            ar ar-modes="webxr scene-viewer quick-look" style="background:transparent;"></model-viewer>
           <!-- Fallback: cojín dibujado como SVG (o render PNG si existe) -->
-          <div id="cushionArt" class="cushion w-[74%] max-w-[440px] z-20 relative"></div>
+          <div id="cushionArt" class="cushion w-[74%] max-w-[440px] z-20 relative transition-opacity duration-700 ease-out"></div>
           <span id="sizeBadge" class="absolute bottom-6 left-6 z-10 text-xs uppercase tracking-[0.2em] text-ink/50 bg-cream/80 backdrop-blur px-3 py-1.5 rounded-full pointer-events-none">55 × 55 cm</span>
           <span id="badge3d" class="hidden absolute top-6 right-6 z-10 text-xs uppercase tracking-[0.18em] text-ink/50 bg-cream/80 backdrop-blur px-3 py-1.5 rounded-full pointer-events-none">↻ Arrástralo · 360°</span>
         </div>
@@ -566,24 +562,24 @@
       </div>
 
       <div class="hover-group grid grid-cols-1 md:grid-cols-12 gap-5">
-        <figure class="reveal hover-card img-zoom md:col-span-7 relative rounded-[1.75rem] overflow-hidden aspect-[4/3]">
-          <img src="assets/ambiente-1.jpg" alt="Cojines terracota y verde en dormitorio" class="w-full h-full object-cover" loading="lazy" />
+        <figure class="reveal hover-card img-zoom skeleton md:col-span-7 relative rounded-[1.75rem] overflow-hidden aspect-[4/3]">
+          <img src="assets/ambiente-1.jpg" alt="Cojines terracota y verde en dormitorio" class="w-full h-full object-cover" loading="lazy" decoding="async" />
           <div class="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent"></div>
           <figcaption class="absolute bottom-6 left-6">
             <span class="block font-serif text-2xl">Dormitorio cálido</span>
             <span class="text-cream/70 text-sm uppercase tracking-wider">Terracota & Verde Bosque</span>
           </figcaption>
         </figure>
-        <figure class="reveal hover-card img-zoom md:col-span-5 relative rounded-[1.75rem] overflow-hidden aspect-[4/3]">
-          <img src="assets/ambiente-3.jpg" alt="Cojines verde lima y crema bouclé" class="w-full h-full object-cover" loading="lazy" />
+        <figure class="reveal hover-card img-zoom skeleton md:col-span-5 relative rounded-[1.75rem] overflow-hidden aspect-[4/3]">
+          <img src="assets/ambiente-3.jpg" alt="Cojines verde lima y crema bouclé" class="w-full h-full object-cover" loading="lazy" decoding="async" />
           <div class="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent"></div>
           <figcaption class="absolute bottom-6 left-6">
             <span class="block font-serif text-2xl">Acento moderno</span>
             <span class="text-cream/70 text-sm uppercase tracking-wider">Lima & Crema Bouclé</span>
           </figcaption>
         </figure>
-        <figure class="reveal hover-card img-zoom md:col-span-12 relative rounded-[1.75rem] overflow-hidden aspect-[16/7]">
-          <img src="assets/ambiente-2.jpg" alt="Cojines beige y crema bouclé en sala" class="w-full h-full object-cover object-center" loading="lazy" />
+        <figure class="reveal hover-card img-zoom skeleton md:col-span-12 relative rounded-[1.75rem] overflow-hidden aspect-[16/7]">
+          <img src="assets/ambiente-2.jpg" alt="Cojines beige y crema bouclé en sala" class="w-full h-full object-cover object-center" loading="lazy" decoding="async" />
           <div class="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent"></div>
           <figcaption class="absolute bottom-6 left-6">
             <span class="block font-serif text-2xl">Sala minimalista</span>
@@ -1068,20 +1064,26 @@
     function enable3D() {
       use3D = true;
       // --- Configurador (stage) ---
-      mv.src = GLB_SRC;
       const credit = document.getElementById('modelCredit');
-      if (credit) credit.classList.remove('hidden');
+      const stageSk = document.getElementById('stageSkeleton');
       if (reduceMotion) mv.removeAttribute('auto-rotate');
       mv.style.transition = 'transform .5s cubic-bezier(.2,.9,.3,1)';
       mv.addEventListener("load", () => {
         modelReady = true;
         applyFabric(mv);
         applySize();
-        // Hides fallback SVG and shows 3D viewer only after model is fully loaded!
-        mv.classList.remove('hidden');
-        art.classList.add('hidden');
         badge3d.classList.remove('hidden');
+        if (credit) credit.classList.remove('hidden');
+        if (stageSk) stageSk.classList.add('opacity-0');
+        // Cross-fade: revela el 3D y desvanece el SVG de respaldo (sin salto brusco)
+        art.classList.add('opacity-0');
+        setTimeout(() => art.classList.add('hidden'), 600);
       });
+      mv.addEventListener("error", () => {        // GLB no disponible → se queda el SVG
+        use3D = false; modelReady = false;
+        if (stageSk) stageSk.classList.add('opacity-0');
+      });
+      mv.src = GLB_SRC;   // carga directa, sin fetch HEAD previo (un round-trip menos)
 
       // --- Hero: cojín girando que CICLA TELAS reales + aura que recolorea + chips de características ---
       const hv = document.getElementById('heroViewer');
@@ -1089,7 +1091,6 @@
       const heroScrim = document.getElementById('heroImgScrim');
       const heroOrbit = document.getElementById('heroOrbit');
       if (hv) {
-        hv.src = HERO_GLB;
         if (reduceMotion) hv.removeAttribute('auto-rotate');
         const heroTelas = ['t1', 't2', 't16', 't11', 't25', 't20'].map((id) => CTELA_BY_ID[id]).filter(Boolean);
         const aura1 = document.getElementById('aura1'), aura2 = document.getElementById('aura2'), aura3 = document.getElementById('aura3');
@@ -1103,13 +1104,14 @@
         let hi = 0;
         hv.addEventListener('load', () => {
           heroApply(heroTelas[0]);
-          // Hides static image and shows 3D viewer only after model is fully loaded!
-          hv.classList.remove('hidden');
-          if (heroImg) heroImg.classList.add('hidden');
-          if (heroScrim) heroScrim.classList.add('hidden');
+          // Cross-fade: desvanece la foto estática y revela el 3D (sin salto brusco)
+          if (heroImg) heroImg.classList.add('opacity-0');
+          if (heroScrim) heroScrim.classList.add('opacity-0');
+          setTimeout(() => { if (heroImg) heroImg.classList.add('hidden'); if (heroScrim) heroScrim.classList.add('hidden'); }, 600);
           if (heroOrbit) heroOrbit.classList.remove('hidden');
           if (!reduceMotion) setInterval(() => { hi = (hi + 1) % heroTelas.length; heroApply(heroTelas[hi]); }, 3200);
         });
+        hv.src = HERO_GLB;   // carga directa tras registrar el listener
         // Chips de características que rotan
         const FEATURES = ['↻ 360° real', 'Relleno antialérgico', 'Funda lavable', 'Hecho a mano', 'Costura con vivo', 'Tela durable', '4 medidas', '+27 telas'];
         const c1 = document.getElementById('chip1'), c2 = document.getElementById('chip2'), c3 = document.getElementById('chip3');
@@ -1122,8 +1124,9 @@
         }, 2600);
       }
     }
-    // Activa el 3D solo si el archivo existe (si no, queda el SVG)
-    fetch(GLB_SRC, { method: 'HEAD' }).then((r) => { if (r.ok) enable3D(); }).catch(() => {});
+    // Carga el 3D directamente. Si el GLB falla, el evento 'error' del model-viewer
+    // deja el SVG de respaldo (sin fetch HEAD previo → un round-trip menos en cada carga).
+    enable3D();
 
     /* ---------- Render cushion SVG (fallback cuando no hay 3D) ---------- */
     let renderId = 0;
@@ -1525,26 +1528,20 @@
       });
     }
 
-    /* ---------- Mobile Scroll Trap Solutions for 3D Viewers ---------- */
-    const setupViewerOverlay = (overlayId, viewerId, triggerSectionId) => {
-      const overlay = document.getElementById(overlayId);
-      const viewer = document.getElementById(viewerId);
-      if (overlay && viewer) {
-        overlay.addEventListener('click', (e) => {
-          e.stopPropagation();
-          overlay.classList.add('opacity-0', 'pointer-events-none');
-          viewer.style.pointerEvents = 'auto';
-        });
-        document.addEventListener('touchstart', (e) => {
-          if (!e.target.closest('#' + triggerSectionId)) {
-            overlay.classList.remove('opacity-0', 'pointer-events-none');
-            viewer.style.pointerEvents = 'none';
-          }
-        });
-      }
-    };
-    setupViewerOverlay('stageTouchOverlay', 'cushion3d', 'stage');
-    setupViewerOverlay('heroTouchOverlay', 'heroViewer', 'top');
+    /* ---------- Visores 3D: rotación 360° directa, sin tocar para activar ----------
+       Los <model-viewer> giran al instante (pointer-events: auto por defecto).
+       touch-action="pan-y" deja pasar el scroll vertical de la página mientras el
+       arrastre horizontal rota el cojín → no hay "trampa de scroll" en móvil. */
+
+    /* ---------- Carga fantasma: revela cada .skeleton cuando su imagen carga ---------- */
+    const markLoaded = (wrap) => wrap.classList.add('is-loaded');
+    document.querySelectorAll('.skeleton').forEach((wrap) => {
+      const img = wrap.querySelector('img');
+      if (!img) return;
+      if (img.complete && img.naturalWidth > 0) { markLoaded(wrap); return; } // ya cacheada
+      img.addEventListener('load', () => markLoaded(wrap), { once: true });
+      img.addEventListener('error', () => markLoaded(wrap), { once: true });   // no dejar shimmer infinito
+    });
 
     /* ---------- ctelas horizontal scroll fades ---------- */
     const ctelas = document.getElementById('ctelas');

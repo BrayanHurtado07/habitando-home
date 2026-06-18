@@ -5,12 +5,17 @@
 # Originales pesados (HEIC/JPG fuente) — se mantienen LOCALMENTE, no en el repo
 images/
 
-# Modelos 3D no usados por el sitio (solo se publica cojin3.glb).
+# Dependencias de build (Tailwind CLI). El CSS compilado (dist/) SÍ se versiona.
+node_modules/
+
+# Modelos 3D no usados por el sitio (solo se publican cojin3.glb y cojin4.glb).
 # Se mantienen LOCALMENTE; no se suben al repo ni a producción.
 assets/3d/cojin.glb
 assets/3d/cojin2.glb
 assets/3d/cojines.glb
 assets/3d/cojines2.glb
+# Backups de los GLB sin comprimir (antes de Draco) — solo locales
+assets/3d/*.orig.glb
 
 # Texturas de tela: originales pesados fuera del repo; se publican los JPG optimizados (tela-*.jpg)
 assets/telas/*.png

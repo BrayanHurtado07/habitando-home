@@ -1,0 +1,13 @@
+{
+  "name": "habitando-home",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Habitando — cojines de diseño premium (sitio estático).",
+  "scripts": {
+    "css": "tailwindcss -c tailwind.config.js -i src/input.css -o dist/tailwind.css --minify",
+    "css:watch": "tailwindcss -c tailwind.config.js -i src/input.css -o dist/tailwind.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0"
+  }
+}
