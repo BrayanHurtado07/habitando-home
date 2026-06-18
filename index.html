@@ -1046,7 +1046,7 @@
 
     /* ---------- Visor 3D (model-viewer) ---------- */
     const GLB_SRC = EDGES[current.edge].glb;   // modelo según el borde elegido
-    const HERO_GLB = 'assets/3d/escena_1cojin.glb'; // hero: escena sofá + cojín
+    const HERO_GLB = 'assets/3d/escena_1cojin.glb?v=2'; // hero: escena sofá + cojín (?v= = anti-caché al actualizar GLB)
     const mv = document.getElementById('cushion3d');
     const badge3d = document.getElementById('badge3d');
     let use3D = false, modelReady = false;
@@ -1666,9 +1666,9 @@
       const viewer = document.getElementById('ambienteViewer');
       if (!viewer) return;
       const SCENES = {
-        1: { glb: 'assets/3d/escena_1cojin.glb', label: '1 cojín', n: 1 },
-        2: { glb: 'assets/3d/escena_2cojines.glb', label: '2 cojines', n: 2 },
-        3: { glb: 'assets/3d/escena_3cojines.glb', label: '3 mixtos', n: 3 },
+        1: { glb: 'assets/3d/escena_1cojin.glb?v=2', label: '1 cojín', n: 1 },
+        2: { glb: 'assets/3d/escena_2cojines.glb?v=2', label: '2 cojines', n: 2 },
+        3: { glb: 'assets/3d/escena_3cojines.glb?v=2', label: '3 mixtos', n: 3 },
       };
       const state = { arr: 2, sofa: 'natural', cush: ['t11', 't25', 't1'], active: 0, loaded: false };
       const sofaName = (id) => (id === 'natural' ? 'Natural' : CTELA_BY_ID[id].name);

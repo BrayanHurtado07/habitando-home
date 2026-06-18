@@ -15,13 +15,13 @@ const ARRANGEMENTS = {
     { size: 0.28, pos: [-0.17, 0.105, 0.03], tiltX: -18, yaw: 0 },
   ],
   'escena_2cojines': [
-    { size: 0.27, pos: [-0.23, 0.105, -0.02], tiltX: -18, yaw: -10 },
-    { size: 0.25, pos: [0.20, 0.10, -0.03], tiltX: -18, yaw: 12 },
+    { size: 0.27, pos: [-0.23, 0.105, 0.03], tiltX: -18, yaw: 0 },
+    { size: 0.27, pos: [0.20, 0.105, 0.03], tiltX: -18, yaw: 0 },
   ],
   'escena_3cojines': [
-    { size: 0.29, pos: [-0.26, 0.105, -0.03], tiltX: -19, yaw: -12 },
-    { size: 0.26, pos: [0.22, 0.10, -0.03], tiltX: -18, yaw: 12 },
-    { size: 0.21, pos: [-0.02, 0.075, 0.04], tiltX: -12, yaw: -3 },
+    { size: 0.28, pos: [-0.27, 0.105, 0.02], tiltX: -18, yaw: 0 },
+    { size: 0.28, pos: [0.23, 0.105, 0.02], tiltX: -18, yaw: 0 },
+    { size: 0.22, pos: [-0.02, 0.085, 0.06], tiltX: -14, yaw: 0 },
   ],
 };
 
