@@ -19,6 +19,29 @@
   <meta property="og:locale" content="es_PE" />
   <meta name="twitter:card" content="summary_large_image" />
 
+  <!-- ============ SEO JSON-LD ============ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Cojines de diseño premium Habitando",
+    "image": "https://habitando.iloremstudio.com/assets/ambiente-2.jpg",
+    "description": "Cojines decorativos premium personalizables en bouclé y chenille de Habitando por Iloremstudio.",
+    "brand": {
+      "@type": "Brand",
+      "name": "Habitando by Iloremstudio"
+    },
+    "offers": {
+      "@type": "AggregateOffer",
+      "priceCurrency": "PEN",
+      "lowPrice": "50.00",
+      "highPrice": "54.00",
+      "offerCount": "1",
+      "price": "54.00"
+    }
+  }
+  </script>
+
   <!-- ============ FONTS ============ -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -55,6 +78,63 @@
   <style>
     html { scroll-behavior: auto; }
     body { -webkit-font-smoothing: antialiased; }
+    model-viewer::part(default-progress-bar) { display: none; }
+
+    /* Preloader */
+    #preloader {
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+    #preloader.opacity-0 {
+      visibility: hidden;
+    }
+
+    /* Custom Cursor */
+    #customCursor {
+      display: none;
+    }
+    @media (min-width: 1024px) {
+      #customCursor {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 10px;
+        height: 10px;
+        background-color: #1C1A17;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        will-change: transform;
+        transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease, border 0.3s ease;
+      }
+      #customCursor.hover-3d {
+        width: 65px;
+        height: 65px;
+        background-color: rgba(247, 244, 239, 0.92);
+        border: 1px solid rgba(28, 26, 23, 0.15);
+        box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+      }
+      #customCursor.hover-3d::after {
+        content: '360°';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 9px;
+        font-family: 'Inter', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #1C1A17;
+        font-weight: 600;
+      }
+      #customCursor.hover-btn {
+        width: 16px;
+        height: 16px;
+        background-color: #C0643E;
+        border: none;
+      }
+    }
 
     /* ====== Sistema de interacción global ====== */
     a, button { transition: color .3s ease, background-color .3s ease, border-color .3s ease, transform .35s cubic-bezier(.2,.9,.3,1), box-shadow .35s ease, opacity .3s ease; }
@@ -117,7 +197,7 @@
     body.solo [data-solo-hide] { display: none !important; }
     body.solo #configurador { padding: 18px; min-height: 100vh; display: flex; align-items: center; }
     body.solo #configurador > div { width: 100%; margin: 0 auto; }
-    @media (min-width: 700px) {
+    @media (min-width: 900px) {
       body.solo #configurador > div { display: grid !important; grid-template-columns: 1fr 0.92fr !important; gap: 2.5rem !important; align-items: center; }
       body.solo #stage { max-height: 84vh; }
     }
@@ -141,6 +221,20 @@
 </head>
 
 <body class="bg-cream text-ink font-sans overflow-x-hidden antialiased selection:bg-clay selection:text-cream">
+
+  <!-- ============ PRELOADER ============ -->
+  <div id="preloader" class="fixed inset-0 bg-cream z-[9999] flex flex-col items-center justify-center transition-all duration-500">
+    <div class="text-center">
+      <h2 id="preloaderLogo" class="font-serif text-4xl sm:text-5xl font-semibold tracking-[-0.02em] text-ink opacity-0 transform translate-y-4">Habitando</h2>
+      <p id="preloaderSub" class="text-[9px] uppercase tracking-[0.42em] text-ink/45 mt-1.5 opacity-0 transform translate-y-4">by Iloremstudio</p>
+      <div class="mt-8 w-24 h-[1.5px] bg-ink/10 mx-auto rounded-full overflow-hidden relative">
+        <div id="preloaderBar" class="absolute top-0 left-0 h-full bg-clay w-0"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ CUSTOM CURSOR ============ -->
+  <div id="customCursor" class="hidden lg:block"></div>
 
   <!-- ============ HEADER ============ -->
   <header id="nav" class="fixed top-0 inset-x-0 z-50 transition-all duration-500">
@@ -232,17 +326,23 @@
         </div>
       </div>
 
-      <div class="lg:col-span-5 relative">
+      <div class="lg:col-span-5 relative w-full max-w-[420px] mx-auto lg:max-w-none">
         <div class="hero-el reveal relative aspect-[4/5]">
           <!-- Cojín 3D girando (se activa si hay GLB; si no, imagen) -->
-          <model-viewer id="heroViewer" class="hidden absolute inset-0 w-full h-full z-10" camera-controls touch-action="pan-y"
+          <model-viewer id="heroViewer" class="absolute inset-0 w-full h-full z-10" camera-controls touch-action="pan-y"
             auto-rotate rotation-per-second="26deg" interaction-prompt="none" disable-zoom
             disable-tap exposure="1.05" shadow-intensity="1.2" shadow-softness="1"
             min-camera-orbit="auto 60deg auto" max-camera-orbit="auto 95deg auto"
-            environment-image="neutral" camera-orbit="0deg 80deg 105%" style="background:transparent"></model-viewer>
+            environment-image="neutral" camera-orbit="0deg 80deg 105%" style="background:transparent; pointer-events: none;"></model-viewer>
+          <div id="heroTouchOverlay" class="absolute inset-0 z-20 md:hidden flex flex-col items-center justify-center bg-ink/5 backdrop-blur-[1px] pointer-events-auto cursor-pointer transition-opacity duration-300">
+            <div class="bg-cream/90 backdrop-blur shadow-lg rounded-full px-5 py-2.5 text-xs font-semibold tracking-wider uppercase text-ink flex items-center gap-2">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m9 9a9 9 0 0 1-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 0 1 9-9"/></svg>
+              Toca para rotar 360°
+            </div>
+          </div>
           <img id="heroImg" src="assets/ambiente-2.jpg" alt="Cojines Habitando"
-               class="absolute inset-0 w-full h-full object-cover rounded-[2rem]" loading="eager" />
-          <div id="heroImgScrim" class="absolute inset-0 bg-gradient-to-t from-ink/20 to-transparent rounded-[2rem]"></div>
+               class="absolute inset-0 w-full h-full object-cover rounded-[2rem] z-20" loading="eager" />
+          <div id="heroImgScrim" class="absolute inset-0 bg-gradient-to-t from-ink/20 to-transparent rounded-[2rem] z-20"></div>
           <!-- Características del cojín, orbitando -->
           <div id="heroOrbit" class="hidden pointer-events-none absolute inset-0 z-20">
             <div class="orbit-slot" style="--a:0deg"><span id="chip1" class="orbit-chip bg-cream/90 backdrop-blur shadow-lg rounded-full px-4 py-2 text-xs font-medium">↻ 360° real</span></div>
@@ -304,33 +404,39 @@
       </div>
 
       <!-- Paleta: 6 tonos -->
-      <div id="palette" class="reveal hover-group grid grid-cols-3 md:grid-cols-6 gap-3"></div>
+      <div id="palette" class="reveal hover-group grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6"></div>
     </div>
   </section>
 
   <!-- ============ CONFIGURADOR INTERACTIVO ============ -->
   <section id="configurador" class="py-12 px-5 sm:px-8">
-    <div class="mx-auto max-w-7xl grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
+    <div class="mx-auto max-w-7xl grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
 
       <!-- Stage -->
       <div class="relative">
-        <div id="stage" class="relative aspect-square max-h-[80vh] mx-auto w-full rounded-[2rem] sm:rounded-[2.5rem] flex items-center justify-center overflow-hidden bg-sand transition-colors duration-700">
+        <div id="stage" class="relative aspect-square max-h-[80vh] mx-auto w-full max-w-[500px] lg:max-w-none rounded-[2rem] sm:rounded-[2.5rem] flex items-center justify-center overflow-hidden bg-sand transition-colors duration-700">
           <!-- Visor 3D real (se activa si existe assets/3d/cojin.glb) -->
-          <model-viewer id="cushion3d" class="hidden absolute inset-0 w-full h-full"
+          <model-viewer id="cushion3d" class="absolute inset-0 w-full h-full z-10"
             camera-controls touch-action="pan-y" auto-rotate rotation-per-second="20deg"
             interaction-prompt="none" exposure="1.05" shadow-intensity="1.15"
             shadow-softness="0.9" environment-image="neutral" camera-orbit="0deg 78deg 100%"
             min-camera-orbit="auto 35deg 70%" max-camera-orbit="auto 105deg 160%"
-            ar ar-modes="webxr scene-viewer quick-look" style="background:transparent"></model-viewer>
+            ar ar-modes="webxr scene-viewer quick-look" style="background:transparent; pointer-events: none;"></model-viewer>
+          <div id="stageTouchOverlay" class="absolute inset-0 z-20 md:hidden flex flex-col items-center justify-center bg-ink/5 backdrop-blur-[1.5px] pointer-events-auto cursor-pointer transition-opacity duration-300">
+            <div class="bg-cream/90 backdrop-blur shadow-lg rounded-full px-5 py-2.5 text-xs font-semibold tracking-wider uppercase text-ink flex items-center gap-2">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m9 9a9 9 0 0 1-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 0 1 9-9"/></svg>
+              Toca para rotar 360°
+            </div>
+          </div>
           <!-- Fallback: cojín dibujado como SVG (o render PNG si existe) -->
-          <div id="cushionArt" class="cushion w-[74%] max-w-[440px]"></div>
+          <div id="cushionArt" class="cushion w-[74%] max-w-[440px] z-20 relative"></div>
           <span id="sizeBadge" class="absolute bottom-6 left-6 z-10 text-xs uppercase tracking-[0.2em] text-ink/50 bg-cream/80 backdrop-blur px-3 py-1.5 rounded-full pointer-events-none">55 × 55 cm</span>
           <span id="badge3d" class="hidden absolute top-6 right-6 z-10 text-xs uppercase tracking-[0.18em] text-ink/50 bg-cream/80 backdrop-blur px-3 py-1.5 rounded-full pointer-events-none">↻ Arrástralo · 360°</span>
         </div>
       </div>
 
       <!-- Controls -->
-      <div>
+      <div class="min-w-0">
         <p class="text-xs uppercase tracking-[0.3em] text-clay mb-3">Personaliza en tiempo real</p>
         <h2 class="font-serif font-light text-[clamp(2rem,4vw,3.25rem)] leading-tight">
           <span id="variantName">Terracota</span>
@@ -343,7 +449,11 @@
             <h3 class="text-sm font-medium uppercase tracking-wider text-ink/40">1 · Tela</h3>
             <a href="telas.html" class="text-xs text-clay hover:underline">Ver catálogo →</a>
           </div>
-          <div id="ctelas" class="flex gap-2.5 overflow-x-auto no-scrollbar pb-2 -mx-1 px-1 snap-x"></div>
+          <div class="relative w-full">
+            <div id="ctelasFadeLeft" class="absolute left-0 top-0 bottom-2 w-8 bg-gradient-to-r from-cream to-transparent pointer-events-none z-10 opacity-0 transition-opacity duration-300"></div>
+            <div id="ctelas" class="flex gap-2.5 overflow-x-auto no-scrollbar pb-2 -mx-1 px-1 snap-x"></div>
+            <div id="ctelasFadeRight" class="absolute right-0 top-0 bottom-2 w-8 bg-gradient-to-l from-cream to-transparent pointer-events-none z-10 transition-opacity duration-300"></div>
+          </div>
           <div id="swatches" class="hidden"></div>
           <div id="textures" class="hidden"></div>
         </div>
@@ -370,13 +480,13 @@
               <p class="text-xs text-clay mt-1 font-medium">Desde 3 unidades · S/ 50 c/u</p>
             </div>
           </div>
-          <div class="flex flex-wrap items-center gap-3">
-            <button id="addBtn" class="group rounded-full bg-ink text-cream px-7 py-4 text-sm font-medium hover:bg-clay transition inline-flex items-center gap-2">
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            <button id="addBtn" class="group rounded-full bg-ink text-cream px-7 py-4 text-sm font-medium hover:bg-clay transition inline-flex items-center justify-center gap-2 w-full sm:w-auto">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
               Añadir al carrito
             </button>
             <a id="waBtn" href="#" target="_blank" rel="noopener"
-               class="rounded-full border border-ink/20 px-6 py-4 text-sm font-medium hover:border-ink transition inline-flex items-center gap-2">
+               class="rounded-full border border-ink/20 px-6 py-4 text-sm font-medium hover:border-ink transition inline-flex items-center justify-center gap-2 w-full sm:w-auto">
               <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.518 5.26l-.999 3.648 3.741-.982z"/></svg>
               Pedir 1 directo
             </a>
@@ -830,7 +940,7 @@
     Object.entries(SIZES).forEach(([key, s]) => {
       const b = document.createElement('button');
       b.dataset.size = key;
-      b.className = 'size-btn pill-btn rounded-full px-5 py-2.5 text-sm font-medium border transition-colors';
+      b.className = 'size-btn pill-btn rounded-full px-4 py-2 sm:px-5 sm:py-2.5 text-xs sm:text-sm font-medium border transition-colors';
       b.textContent = s.short;
       b.setAttribute('aria-pressed', key === current.size);
       b.addEventListener('click', () => setSize(key));
@@ -841,7 +951,7 @@
     Object.entries(TEXTURES).forEach(([key, t]) => {
       const b = document.createElement('button');
       b.dataset.texture = key;
-      b.className = 'tex-btn pill-btn rounded-full px-5 py-2.5 text-sm font-medium border transition-colors';
+      b.className = 'tex-btn pill-btn rounded-full px-4 py-2 sm:px-5 sm:py-2.5 text-xs sm:text-sm font-medium border transition-colors';
       b.textContent = t.short;
       b.setAttribute('aria-pressed', key === current.texture);
       b.addEventListener('click', () => setTexture(key));
@@ -850,7 +960,7 @@
     Object.entries(EDGES).forEach(([key, e]) => {
       const b = document.createElement('button');
       b.dataset.edge = key;
-      b.className = 'edge-btn pill-btn rounded-full px-5 py-2.5 text-sm font-medium border transition-colors';
+      b.className = 'edge-btn pill-btn rounded-full px-4 py-2 sm:px-5 sm:py-2.5 text-xs sm:text-sm font-medium border transition-colors';
       b.textContent = e.short;
       b.setAttribute('aria-pressed', key === current.edge);
       b.addEventListener('click', () => setEdge(key));
@@ -959,14 +1069,19 @@
       use3D = true;
       // --- Configurador (stage) ---
       mv.src = GLB_SRC;
-      mv.classList.remove('hidden');
-      art.classList.add('hidden');
-      badge3d.classList.remove('hidden');
       const credit = document.getElementById('modelCredit');
       if (credit) credit.classList.remove('hidden');
       if (reduceMotion) mv.removeAttribute('auto-rotate');
       mv.style.transition = 'transform .5s cubic-bezier(.2,.9,.3,1)';
-      mv.addEventListener("load", () => { modelReady = true; applyFabric(mv); applySize(); });
+      mv.addEventListener("load", () => {
+        modelReady = true;
+        applyFabric(mv);
+        applySize();
+        // Hides fallback SVG and shows 3D viewer only after model is fully loaded!
+        mv.classList.remove('hidden');
+        art.classList.add('hidden');
+        badge3d.classList.remove('hidden');
+      });
 
       // --- Hero: cojín girando que CICLA TELAS reales + aura que recolorea + chips de características ---
       const hv = document.getElementById('heroViewer');
@@ -975,10 +1090,6 @@
       const heroOrbit = document.getElementById('heroOrbit');
       if (hv) {
         hv.src = HERO_GLB;
-        hv.classList.remove('hidden');
-        if (heroImg) heroImg.classList.add('hidden');
-        if (heroScrim) heroScrim.classList.add('hidden');
-        if (heroOrbit) heroOrbit.classList.remove('hidden');
         if (reduceMotion) hv.removeAttribute('auto-rotate');
         const heroTelas = ['t1', 't2', 't16', 't11', 't25', 't20'].map((id) => CTELA_BY_ID[id]).filter(Boolean);
         const aura1 = document.getElementById('aura1'), aura2 = document.getElementById('aura2'), aura3 = document.getElementById('aura3');
@@ -992,6 +1103,11 @@
         let hi = 0;
         hv.addEventListener('load', () => {
           heroApply(heroTelas[0]);
+          // Hides static image and shows 3D viewer only after model is fully loaded!
+          hv.classList.remove('hidden');
+          if (heroImg) heroImg.classList.add('hidden');
+          if (heroScrim) heroScrim.classList.add('hidden');
+          if (heroOrbit) heroOrbit.classList.remove('hidden');
           if (!reduceMotion) setInterval(() => { hi = (hi + 1) % heroTelas.length; heroApply(heroTelas[hi]); }, 3200);
         });
         // Chips de características que rotan
@@ -1130,11 +1246,15 @@
       const featured = ['t1', 't2', 't11', 't16', 't18', 't25'].map((id) => CTELA_BY_ID[id]).filter(Boolean);
       featured.forEach((t) => {
         const c = document.createElement('button');
-        c.className = 'hover-card text-left rounded-2xl bg-white p-2.5 sm:p-3';
+        c.className = 'hover-card text-left rounded-2xl bg-white p-3 sm:p-4 border border-ink/5 shadow-[0_4px_20px_-4px_rgba(28,26,23,0.05)] transition-all';
         c.innerHTML =
-          '<div class="aspect-square rounded-xl overflow-hidden bg-sand"><img src="' + ctelaImg(t) + '" alt="' + t.name + '" class="w-full h-full object-cover" loading="lazy"/></div>' +
-          '<p class="mt-2 font-medium text-sm leading-snug">' + t.name + '</p>' +
-          '<p class="text-xs text-ink/45">' + t.tipo + '</p>';
+          '<div class="aspect-square rounded-xl overflow-hidden bg-sand relative group-hover:scale-[1.02] transition-transform duration-500">' +
+            '<img src="' + ctelaImg(t) + '" alt="' + t.name + '" class="w-full h-full object-cover" loading="lazy"/>' +
+          '</div>' +
+          '<div class="mt-3">' +
+            '<p class="font-medium text-xs sm:text-sm text-ink leading-tight truncate sm:whitespace-normal">' + t.name + '</p>' +
+            '<p class="text-[10px] sm:text-xs text-ink/40 mt-1 uppercase tracking-wider font-semibold">' + t.tipo + '</p>' +
+          '</div>';
         c.addEventListener('click', () => {
           setTela(t.id);
           const sec = document.getElementById('configurador');
@@ -1149,17 +1269,34 @@
     setSize(current.size);
     // Tela inicial (deep link desde el catálogo: index.html?tela=N, o la primera)
     let initTela = current.ctela;
+    let hasQueryTela = false;
+    let isSoloMode = false;
     try {
       const qs = new URLSearchParams(location.search);
       const tp = qs.get('tela');
-      if (tp) { const t = CTELAS.find((x) => String(x.n) === String(tp) || x.id === tp); if (t) initTela = t.id; }
+      if (tp) {
+        const t = CTELAS.find((x) => String(x.n) === String(tp) || x.id === tp);
+        if (t) { initTela = t.id; hasQueryTela = true; }
+      }
       if (qs.get('solo') === '1') {
+        isSoloMode = true;
         document.body.classList.add('solo');
         document.querySelectorAll('#configurador h3').forEach((h) => { h.textContent = h.textContent.replace(/^\d+\s*·\s*/, ''); });
       }
     } catch (e) {}
     setTela(initTela);
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Scroll al configurador si viene del catálogo (pero no en modo solo/iframe)
+    if (hasQueryTela && !isSoloMode) {
+      setTimeout(() => {
+        const sec = document.getElementById('configurador');
+        if (sec) {
+          if (lenis) lenis.scrollTo(sec, { offset: -80 });
+          else sec.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 1000);
+    }
 
     /* ---------- Scrollspy: marca la sección activa en el header ---------- */
     (function () {
@@ -1219,7 +1356,14 @@
       if (found) found.qty++;
       else cart.push({ id, ctela: current.ctela, color: current.color, texture: current.texture, edge: current.edge, size: current.size,
         name: af.name, tipo: af.tipo, edgeName: EDGES[current.edge].name, sizeLabel: sz.label, qty: 1 });
-      saveCart(); renderCart(); openCart(); pulseCart();
+      saveCart(); renderCart();
+      try {
+        if (window.self !== window.top) {
+          window.parent.postMessage({ type: 'ADD_TO_CART' }, '*');
+          return;
+        }
+      } catch (e) {}
+      openCart(); pulseCart();
     }
     function changeQty(id, d) {
       const it = cart.find((i) => i.id === id); if (!it) return;
@@ -1326,6 +1470,98 @@
       } else {
         gsap.set('.hero-el, .reveal', { opacity: 1, y: 0 });
       }
+    }
+
+    /* ---------- Preloader GSAP Animation ---------- */
+    if (window.gsap) {
+      const plTl = gsap.timeline({
+        onComplete: () => {
+          const pl = document.getElementById('preloader');
+          if (pl) {
+            pl.classList.add('opacity-0');
+            setTimeout(() => pl.remove(), 600);
+          }
+        }
+      });
+      plTl.to('#preloaderLogo', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', delay: 0.1 })
+          .to('#preloaderSub', { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, '-=0.3')
+          .to('#preloaderBar', { width: '100%', duration: 1.0, ease: 'power2.inOut' }, '-=0.3')
+          .to('#preloader', { opacity: 0, duration: 0.4, ease: 'power2.out' });
+
+      // Safety fallback / window load shortcut
+      const removeLoader = () => {
+        const pl = document.getElementById('preloader');
+        if (pl) {
+          gsap.to('#preloaderBar', { width: '100%', duration: 0.2, onComplete: () => {
+            gsap.to(pl, { opacity: 0, duration: 0.3, onComplete: () => pl.remove() });
+          }});
+        }
+      };
+      window.addEventListener('load', removeLoader);
+      setTimeout(removeLoader, 2800); // 2.8s maximum wait time
+    } else {
+      const pl = document.getElementById('preloader');
+      if (pl) pl.remove();
+    }
+
+    /* ---------- Custom Cursor Following Logic ---------- */
+    const cursor = document.getElementById('customCursor');
+    if (cursor && window.gsap && !reduceMotion) {
+      document.addEventListener('mousemove', (e) => {
+        gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.08, overwrite: 'auto' });
+      });
+      // Toggle cursor style on hover of buttons/links
+      document.querySelectorAll('a, button, [role="button"], .ctela, .swatch, .size-btn, .tex-btn, .edge-btn').forEach((el) => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('hover-btn'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('hover-btn'));
+      });
+      // Toggle cursor style on hover of 3D / SVG Stage
+      const viewers = [document.getElementById('cushion3d'), document.getElementById('heroViewer'), document.getElementById('cushionArt')];
+      viewers.forEach((v) => {
+        if (v) {
+          v.addEventListener('mouseenter', () => cursor.classList.add('hover-3d'));
+          v.addEventListener('mouseleave', () => cursor.classList.remove('hover-3d'));
+        }
+      });
+    }
+
+    /* ---------- Mobile Scroll Trap Solutions for 3D Viewers ---------- */
+    const setupViewerOverlay = (overlayId, viewerId, triggerSectionId) => {
+      const overlay = document.getElementById(overlayId);
+      const viewer = document.getElementById(viewerId);
+      if (overlay && viewer) {
+        overlay.addEventListener('click', (e) => {
+          e.stopPropagation();
+          overlay.classList.add('opacity-0', 'pointer-events-none');
+          viewer.style.pointerEvents = 'auto';
+        });
+        document.addEventListener('touchstart', (e) => {
+          if (!e.target.closest('#' + triggerSectionId)) {
+            overlay.classList.remove('opacity-0', 'pointer-events-none');
+            viewer.style.pointerEvents = 'none';
+          }
+        });
+      }
+    };
+    setupViewerOverlay('stageTouchOverlay', 'cushion3d', 'stage');
+    setupViewerOverlay('heroTouchOverlay', 'heroViewer', 'top');
+
+    /* ---------- ctelas horizontal scroll fades ---------- */
+    const ctelas = document.getElementById('ctelas');
+    const fadeLeft = document.getElementById('ctelasFadeLeft');
+    const fadeRight = document.getElementById('ctelasFadeRight');
+    if (ctelas && fadeLeft && fadeRight) {
+      const updateFades = () => {
+        const sl = ctelas.scrollLeft;
+        const maxSl = ctelas.scrollWidth - ctelas.clientWidth;
+        fadeLeft.style.opacity = sl > 8 ? '1' : '0';
+        fadeLeft.classList.toggle('pointer-events-none', sl <= 8);
+        fadeRight.style.opacity = sl < maxSl - 8 ? '1' : '0';
+        fadeRight.classList.toggle('pointer-events-none', sl >= maxSl - 8);
+      };
+      ctelas.addEventListener('scroll', updateFades);
+      window.addEventListener('resize', updateFades);
+      setTimeout(updateFades, 600); // Exec after canvas or dynamic items render
     }
   })();
   </script>
