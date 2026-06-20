@@ -32,14 +32,6 @@
     "brand": {
       "@type": "Brand",
       "name": "Habitando by Iloremstudio"
-    },
-    "offers": {
-      "@type": "AggregateOffer",
-      "priceCurrency": "PEN",
-      "lowPrice": "50.00",
-      "highPrice": "54.00",
-      "offerCount": "1",
-      "price": "54.00"
     }
   }
   </script>
@@ -52,7 +44,7 @@
     rel="stylesheet" />
 
   <!-- ============ ESTILOS (Tailwind compilado, sin CDN en runtime) ============ -->
-  <link rel="stylesheet" href="dist/tailwind.css?v=11" />
+  <link rel="stylesheet" href="dist/tailwind.css?v=12" />
 
   <!-- ============ LIBS (no-build) ============ -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -134,58 +126,6 @@
 
     #preloader.opacity-0 {
       visibility: hidden;
-    }
-
-    /* Custom Cursor */
-    #customCursor {
-      display: none;
-    }
-
-    @media (min-width: 1024px) {
-      #customCursor {
-        display: block;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 10px;
-        height: 10px;
-        background-color: #1C1A17;
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 9999;
-        transform: translate(-50%, -50%);
-        will-change: transform;
-        transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease, border 0.3s ease;
-      }
-
-      #customCursor.hover-3d {
-        width: 65px;
-        height: 65px;
-        background-color: rgba(247, 244, 239, 0.92);
-        border: 1px solid rgba(28, 26, 23, 0.15);
-        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-      }
-
-      #customCursor.hover-3d::after {
-        content: '360°';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 9px;
-        font-family: 'Inter', sans-serif;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        color: #1C1A17;
-        font-weight: 600;
-      }
-
-      #customCursor.hover-btn {
-        width: 16px;
-        height: 16px;
-        background-color: #C0643E;
-        border: none;
-      }
     }
 
     /* ====== Sistema de interacción global ====== */
@@ -467,8 +407,6 @@
     </div>
   </div>
 
-  <!-- ============ CUSTOM CURSOR ============ -->
-  <div id="customCursor" class="hidden lg:block"></div>
 
   <!-- ============ HEADER ============ -->
   <header id="nav" class="fixed top-0 inset-x-0 z-50 transition-all duration-500">
@@ -540,10 +478,9 @@
       <p class="text-sm">Tu carrito está vacío.<br />Personaliza un cojín y añádelo.</p>
     </div>
     <div id="cartFooter" class="hidden border-t border-ink/10 px-6 py-5 space-y-4">
-      <div id="bulkNote" class="hidden text-xs text-clay font-medium bg-clay/10 rounded-lg px-3 py-2"></div>
       <div class="flex items-center justify-between">
-        <span class="text-ink/60">Total (<span id="cartUnits">0</span> uds.)</span>
-        <span class="font-serif text-3xl">S/ <span id="cartTotal">0</span></span>
+        <span class="text-ink/60">Total</span>
+        <span class="font-serif text-2xl"><span id="cartUnits">0</span> <span class="text-base font-sans text-ink/60">cojines</span></span>
       </div>
       <a id="cartCheckout" href="#" target="_blank" rel="noopener"
         class="w-full rounded-full bg-[#1FA855] text-white py-4 font-medium hover:brightness-95 transition flex items-center justify-center gap-2">
@@ -553,7 +490,7 @@
         </svg>
         Finalizar pedido por WhatsApp
       </a>
-      <p class="text-[11px] text-ink/65 text-center">Apartas con 50% · resto contra entrega · envío a coordinar</p>
+      <p class="text-[11px] text-ink/65 text-center">Te cotizamos por WhatsApp · apartas con 50% · envío a coordinar</p>
     </div>
   </aside>
 
@@ -604,7 +541,7 @@
         </div>
         <div
           class="hero-el reveal mt-10 inline-flex flex-col bg-cream/70 backdrop-blur rounded-2xl shadow-lg px-5 py-3">
-          <p class="font-serif text-2xl">+27 telas</p>
+          <p class="font-serif text-2xl">+21 telas</p>
           <p class="text-xs text-ink/55 uppercase tracking-wider">Jacquard · Seda · Satén</p>
         </div>
       </div>
@@ -724,7 +661,7 @@
             <div id="ctelasFadeLeft"
               class="absolute left-0 top-0 bottom-2 w-8 bg-gradient-to-r from-cream to-transparent pointer-events-none z-10 opacity-0 transition-opacity duration-300">
             </div>
-            <div id="ctelas" class="flex gap-2.5 overflow-x-auto no-scrollbar pb-2 -mx-1 px-1 snap-x"></div>
+            <div id="ctelas" class="flex gap-2.5 overflow-x-auto no-scrollbar py-2 -mx-2 px-2 snap-x"></div>
             <div id="ctelasFadeRight"
               class="absolute right-0 top-0 bottom-2 w-8 bg-gradient-to-l from-cream to-transparent pointer-events-none z-10 transition-opacity duration-300">
             </div>
@@ -743,19 +680,11 @@
         <div class="mt-8">
           <h3 class="text-sm font-medium uppercase tracking-wider text-ink/65 mb-4">3 · Medida</h3>
           <div id="sizes" class="flex flex-wrap gap-2.5"></div>
-          <p class="mt-3 text-xs text-ink/65">Mismo precio en todas las medidas.</p>
+          <p class="mt-3 text-xs text-ink/65">Disponible en todas las medidas.</p>
         </div>
 
-        <!-- Price + CTA -->
+        <!-- CTA -->
         <div class="mt-12">
-          <div class="flex items-end gap-6 mb-6">
-            <div>
-              <p class="text-xs uppercase tracking-wider text-ink/65">Precio</p>
-              <p class="font-serif text-4xl">S/ <span id="price">54</span> <span
-                  class="text-base text-ink/65 font-sans">c/u</span></p>
-              <p class="text-xs text-clay mt-1 font-medium">Desde 3 unidades · S/ 50 c/u</p>
-            </div>
-          </div>
           <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
             <button id="addBtn"
               class="group rounded-full bg-ink text-cream px-7 py-4 text-sm font-medium hover:bg-clay transition inline-flex items-center justify-center gap-2 w-full sm:w-auto">
@@ -821,7 +750,7 @@
           <div class="mt-8">
             <h3 class="text-sm font-medium uppercase tracking-wider text-ink/65 mb-4">2 · Color del sofá</h3>
             <div class="relative w-full">
-              <div id="ambSofa" class="flex gap-2.5 overflow-x-auto no-scrollbar pb-2 -mx-1 px-1 snap-x"></div>
+              <div id="ambSofa" class="flex gap-2.5 overflow-x-auto no-scrollbar py-2 -mx-2 px-2 snap-x"></div>
               <div
                 class="absolute right-0 top-0 bottom-2 w-8 bg-gradient-to-l from-cream to-transparent pointer-events-none z-10">
               </div>
@@ -833,7 +762,7 @@
             <h3 class="text-sm font-medium uppercase tracking-wider text-ink/65 mb-3">3 · Tela de los cojines</h3>
             <div id="ambCushTabs" class="flex flex-wrap gap-2 mb-3"></div>
             <div class="relative w-full">
-              <div id="ambCush" class="flex gap-2.5 overflow-x-auto no-scrollbar pb-2 -mx-1 px-1 snap-x"></div>
+              <div id="ambCush" class="flex gap-2.5 overflow-x-auto no-scrollbar py-2 -mx-2 px-2 snap-x"></div>
               <div
                 class="absolute right-0 top-0 bottom-2 w-8 bg-gradient-to-l from-cream to-transparent pointer-events-none z-10">
               </div>
@@ -1164,8 +1093,7 @@
 
       /* ---------- Data ---------- */
       const WHATSAPP = '51953363930'; // Habitando
-      const PRICE = 54;       // precio unitario S/
-      const PRICE_BULK = 50;  // desde 3 unidades S/
+      // Precios se manejan por WhatsApp (cambian seguido) — no se muestran en el sitio.
       const VARIANTS = { // colores = telas reales (hex muestreado de cada foto)
         terracota: { name: 'Terracota', hex: '#CF7339', stage: '#EFE3D6' },
         crema: { name: 'Crema', hex: '#CFC8BD', stage: '#F2EDE3' },
@@ -1194,13 +1122,26 @@
       const TILE = 6; // repeticiones por lado (telas base peluche/chenille)
       // Telas del catálogo (assets/telas/web/) — se aplican al cojín
       const CTELAS = [
-        { id: 't1', n: 1, name: '1071-TE Svevo One', tipo: 'Jacquard', hex: '#C39E8D' },
-        { id: 't2', n: 2, name: '1072-TE Ikebana', tipo: 'Jacquard', hex: '#A39C87' },
-        { id: 't3', n: 3, name: '1075-TE Uxmal', tipo: 'Jacquard', hex: '#5C5E4B' },
+        // Colección 1906 (assets/telas/web/1906/) — novedades, se muestran primero:
+        { id: 't101', n: 101, name: 'Velvet Vienna Oro', tipo: 'Velvet', hex: '#C9A24B', img: 'assets/telas/web/1906/1.jpg' },
+        { id: 't102', n: 102, name: 'Velvet Star Beige', tipo: 'Velvet', hex: '#CAB196', img: 'assets/telas/web/1906/2.webp' },
+        { id: 't103', n: 103, name: 'Velvet Vienna Topo', tipo: 'Velvet', hex: '#8C7F70', img: 'assets/telas/web/1906/3.webp' },
+        { id: 't104', n: 104, name: 'Velvet Vienna Blanco', tipo: 'Velvet', hex: '#ECE7DD', img: 'assets/telas/web/1906/4.webp' },
+        { id: 't105', n: 105, name: 'Velvet Vienna Gris Claro', tipo: 'Velvet', hex: '#B4B4B2', img: 'assets/telas/web/1906/5.webp' },
+        { id: 't106', n: 106, name: 'Velvet Vienna Terracota', tipo: 'Velvet', hex: '#B05C3B', img: 'assets/telas/web/1906/6.webp' },
+        { id: 't107', n: 107, name: 'Velvet Vienna Chocolate', tipo: 'Velvet', hex: '#4B362A', img: 'assets/telas/web/1906/7.webp' },
+        { id: 't108', n: 108, name: 'Velvet Essenza Beige Claro', tipo: 'Velvet', hex: '#D2C2A6', img: 'assets/telas/web/1906/8.webp' },
+        { id: 't109', n: 109, name: 'Velvet Essenza Gris Claro', tipo: 'Velvet', hex: '#9A9A98', img: 'assets/telas/web/1906/9.webp' },
+        { id: 't110', n: 110, name: 'ADN / 10 Beige', tipo: 'Chenille', hex: '#B6A488', img: 'assets/telas/web/1906/10.jpg' },
+        { id: 't111', n: 111, name: 'Terciopelo Verde Oliva', tipo: 'Velvet', hex: '#6B6B3A', img: 'assets/telas/web/1906/11.jpeg' },
+        // Telas sin stock (comentadas — descomenta para reactivar):
+        // { id: 't1', n: 1, name: '1071-TE Svevo One', tipo: 'Jacquard', hex: '#C39E8D' },
+        // { id: 't2', n: 2, name: '1072-TE Ikebana', tipo: 'Jacquard', hex: '#A39C87' },
+        // { id: 't3', n: 3, name: '1075-TE Uxmal', tipo: 'Jacquard', hex: '#5C5E4B' },
         { id: 't4', n: 4, name: '13724 / 39', tipo: 'Seda', hex: '#C3B4A0' },
-        { id: 't5', n: 5, name: '18466', tipo: 'Jacquard', hex: '#8B7A7D' },
-        { id: 't6', n: 6, name: '18511', tipo: 'Jacquard', hex: '#51535D' },
-        { id: 't7', n: 7, name: '18556', tipo: 'Jacquard', hex: '#72655E' },
+        // { id: 't5', n: 5, name: '18466', tipo: 'Jacquard', hex: '#8B7A7D' },
+        // { id: 't6', n: 6, name: '18511', tipo: 'Jacquard', hex: '#51535D' },
+        // { id: 't7', n: 7, name: '18556', tipo: 'Jacquard', hex: '#72655E' },
         { id: 't8', n: 8, name: 'AIB0001 / A08', tipo: 'Satén', hex: '#ACA5A0' },
         { id: 't9', n: 9, name: 'AIB0001 / A02', tipo: 'Satén', hex: '#A49A91' },
         { id: 't10', n: 10, name: 'AIB0001 / A06', tipo: 'Satén', hex: '#8B827B' },
@@ -1224,7 +1165,7 @@
       ];
       const CTELA_BY_ID = {}; CTELAS.forEach((t) => { CTELA_BY_ID[t.id] = t; });
       const CTELA_TILE = 2; // los jacquard/seda muestran el motivo ~2× en el cojín
-      const ctelaImg = (t) => 'assets/telas/web/tela-' + String(t.n).padStart(2, '0') + '.jpg';
+      const ctelaImg = (t) => t.img || 'assets/telas/web/tela-' + String(t.n).padStart(2, '0') + '.jpg';
       const SIZES = {
         '40x40': { label: '40 × 40 cm', short: '40×40', sx: 0.88, sy: 0.88 },
         '45x45': { label: '45 × 45 cm', short: '45×45', sx: 0.97, sy: 0.97 },
@@ -1232,7 +1173,7 @@
         '40x60': { label: '40 × 60 cm', short: '40×60', sx: 1.20, sy: 0.80 }, // rectangular
       };
 
-      let current = { color: 'terracota', texture: 'peluche', edge: 'plano', size: '55x55', ctela: 't1' };
+      let current = { color: 'terracota', texture: 'peluche', edge: 'plano', size: '55x55', ctela: 't4' };
 
       // Tela activa: del catálogo (si hay) o de la paleta base. Unifica img/tile/hex/nombre.
       function activeFabric() {
@@ -1256,7 +1197,6 @@
       const sizesWrap = document.getElementById('sizes');
       const nameEl = document.getElementById('variantName');
       const texEl = document.getElementById('variantTexture');
-      const priceEl = document.getElementById('price');
       const sizeBadge = document.getElementById('sizeBadge');
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -1436,7 +1376,7 @@
 
       /* ---------- Visor 3D (model-viewer) ---------- */
       const GLB_SRC = EDGES[current.edge].glb;   // modelo según el borde elegido
-      const HERO_GLB = 'assets/3d/escena_1cojin.glb?v=9'; // hero: escena sofá + cojín (?v= = anti-caché al actualizar GLB)
+      const HERO_GLB = 'assets/3d/escena_hero.glb?v=11'; // hero: escena sofá + 3 cojines agrupados (?v= = anti-caché)
       const mv = document.getElementById('cushion3d');
       const badge3d = document.getElementById('badge3d');
       let use3D = false, modelReady = false;
@@ -1544,7 +1484,7 @@
         const hv = document.getElementById('heroViewer');
         if (hv) {
           if (reduceMotion) hv.removeAttribute('auto-rotate');
-          const heroTelas = ['t1', 't2', 't16', 't11', 't25', 't20'].map((id) => CTELA_BY_ID[id]).filter(Boolean);
+          const heroTelas = ['t16', 't11', 't25', 't20', 't9', 't18'].map((id) => CTELA_BY_ID[id]).filter(Boolean);
           const aura1 = document.getElementById('aura1'), aura2 = document.getElementById('aura2'), aura3 = document.getElementById('aura3');
           function paintAura(hex) {
             // tinte suave hacia el crema → nunca invasivo, aunque la tela sea oscura
@@ -1560,22 +1500,25 @@
             try { heroTexCache[t.id] = await hv.createTexture(await tiledURL(ctelaImg(t), CTELA_TILE)); } catch (e) { }
             return heroTexCache[t.id];
           }
-          const heroApply = async (t) => {
+          // Cada uno de los 3 cojines toma una tela distinta (desplazada por índice) y todas rotan
+          const heroApply = async (start) => {
             if (!hv.model) return;
             const sofaMat = hv.model.materials.find((m) => m.name === 'sofa_fabric');
             if (sofaMat) sofaMat.pbrMetallicRoughness.setBaseColorFactor([1, 1, 1, 1]); // sofá en su color natural
-            const cushMat = hv.model.materials.find((m) => m.name === 'cushion0_0');
-            if (cushMat) {
+            for (let i = 0; i < 3; i++) {
+              const mat = hv.model.materials.find((m) => m.name === 'cushion' + i + '_0');
+              if (!mat) continue;
+              const t = heroTelas[(start + i) % heroTelas.length];
               const tex = await heroCushTex(t);
-              const pbr = cushMat.pbrMetallicRoughness;
+              const pbr = mat.pbrMetallicRoughness;
               if (tex) { pbr.baseColorTexture.setTexture(tex); pbr.setBaseColorFactor([1, 1, 1, 1]); pbr.setRoughnessFactor(0.6); pbr.setMetallicFactor(0); }
             }
-            paintAura(t.hex);
+            paintAura(heroTelas[start].hex);
           };
           let hi = 0;
           hv.addEventListener('load', () => {
-            heroApply(heroTelas[0]);
-            if (!reduceMotion) setInterval(() => { hi = (hi + 1) % heroTelas.length; heroApply(heroTelas[hi]); }, 3200);
+            heroApply(0);
+            if (!reduceMotion) setInterval(() => { hi = (hi + 1) % heroTelas.length; heroApply(hi); }, 3200);
           });
           hv.src = HERO_GLB;   // carga directa tras registrar el listener
         }
@@ -1684,7 +1627,6 @@
       function setSize(key) {
         if (!SIZES[key]) return;
         current.size = key;
-        priceEl.textContent = PRICE;
         sizeBadge.textContent = SIZES[key].label;
         setPills('.size-btn', 'size', key);
         applySize();
@@ -1696,7 +1638,7 @@
         return `${af.name} · ${af.tipo} · borde ${EDGES[current.edge].name.toLowerCase()} · ${SIZES[current.size].label}`;
       }
       function updateWhatsApp() {
-        const msg = `Hola Habitando 👋 Me interesa el cojín *${describe()}*. ¿Está disponible?\n\n(Vi que es S/ ${PRICE} c/u, y desde 3 unidades S/ ${PRICE_BULK} c/u)`;
+        const msg = `Hola Habitando 👋 Me interesa el cojín *${describe()}*. ¿Está disponible? ¿Me pasas el precio?`;
         const href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
         document.getElementById('waBtn').href = href;
         document.getElementById('waBtnBottom').href = href;
@@ -1706,7 +1648,7 @@
       /* ---------- Paleta de la colección (telas destacadas) ---------- */
       const paletteWrap = document.getElementById('palette');
       if (paletteWrap) {
-        const featured = ['t1', 't2', 't11', 't16', 't18', 't25'].map((id) => CTELA_BY_ID[id]).filter(Boolean);
+        const featured = ['t11', 't16', 't18', 't25', 't9', 't20'].map((id) => CTELA_BY_ID[id]).filter(Boolean);
         featured.forEach((t) => {
           const c = document.createElement('button');
           c.className = 'hover-card text-left rounded-2xl bg-white p-3 sm:p-4 border border-ink/5 shadow-[0_4px_20px_-4px_rgba(28,26,23,0.05)] transition-all';
@@ -1798,14 +1740,11 @@
       const cartFooterEl = document.getElementById('cartFooter');
       const cartCountEl = document.getElementById('cartCount');
       const cartUnitsEl = document.getElementById('cartUnits');
-      const cartTotalEl = document.getElementById('cartTotal');
-      const bulkNoteEl = document.getElementById('bulkNote');
       const cartCheckout = document.getElementById('cartCheckout');
 
       const saveCart = () => { try { localStorage.setItem('habitando_cart', JSON.stringify(cart)); } catch (e) { } };
       const loadCart = () => { try { const d = JSON.parse(localStorage.getItem('habitando_cart') || '[]'); if (Array.isArray(d)) d.forEach((i) => { if (SIZES[i.size] && EDGES[i.edge] && (i.ctela ? CTELA_BY_ID[i.ctela] : VARIANTS[i.color])) cart.push(i); }); } catch (e) { } };
       const totalUnits = () => cart.reduce((n, i) => n + i.qty, 0);
-      const unitPrice = () => (totalUnits() >= 3 ? PRICE_BULK : PRICE);
       // Tela de un ítem del carrito (para la miniatura)
       function itemFabric(it) {
         if (it.ctela && CTELA_BY_ID[it.ctela]) { const t = CTELA_BY_ID[it.ctela]; return { v: { name: t.name, hex: t.hex }, url: ctelaImg(t), tile: CTELA_TILE }; }
@@ -1839,15 +1778,13 @@
       function removeItem(id) { const i = cart.findIndex((x) => x.id === id); if (i >= 0) cart.splice(i, 1); saveCart(); renderCart(); }
 
       function checkoutHref() {
-        const price = unitPrice();
-        let msg = 'Hola Habitando 👋 Quiero hacer este pedido:\n';
+        let msg = 'Hola Habitando 👋 Quiero hacer este pedido y que me pasen el precio:\n';
         cart.forEach((it) => { msg += `\n• ${it.qty}× ${it.name} · ${it.tipo} · borde ${it.edgeName.toLowerCase()} · ${it.sizeLabel}`; });
-        msg += `\n\nTotal: ${totalUnits()} cojines × S/ ${price} = *S/ ${price * totalUnits()}*`;
-        msg += '\n\n¿Coordinamos el 50% para apartar? 🙌';
+        msg += '\n\n¿Me cotizan, por favor? 🙌';
         return 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(msg);
       }
       function renderCart() {
-        const units = totalUnits(), price = unitPrice();
+        const units = totalUnits();
         if (units > 0) { cartCountEl.textContent = units; cartCountEl.classList.remove('hidden'); }
         else cartCountEl.classList.add('hidden');
 
@@ -1870,7 +1807,6 @@
           '</div>' +
           '</div>' +
           '<div class="text-right">' +
-          '<p class="font-medium">S/ ' + (price * it.qty) + '</p>' +
           '<button class="rm text-xs text-ink/65 hover:text-clay" data-id="' + it.id + '">Quitar</button>' +
           '</div>' +
           '</div>').join('');
@@ -1878,10 +1814,6 @@
         cartItemsEl.querySelectorAll('.rm').forEach((b) => b.onclick = () => removeItem(b.dataset.id));
 
         cartUnitsEl.textContent = units;
-        cartTotalEl.textContent = price * units;
-        if (units >= 3) bulkNoteEl.textContent = '✓ Precio mayorista aplicado: S/ ' + PRICE_BULK + ' c/u';
-        else { const f = 3 - units; bulkNoteEl.textContent = 'Añade ' + f + (f === 1 ? ' cojín más' : ' cojines más') + ' y todos quedan a S/ ' + PRICE_BULK + ' c/u'; }
-        bulkNoteEl.classList.remove('hidden');
         cartCheckout.href = checkoutHref();
       }
       function openCart() { cartDrawer.classList.remove('translate-x-full'); cartOverlay.classList.remove('opacity-0', 'pointer-events-none'); document.body.style.overflow = 'hidden'; if (lenis) lenis.stop(); }
@@ -1972,17 +1904,10 @@
         if (pl) pl.remove();
       }
 
-      /* ---------- Custom Cursor Following Logic ---------- */
-      const cursor = document.getElementById('customCursor');
-      if (cursor && window.gsap && !reduceMotion) {
-        document.addEventListener('mousemove', (e) => {
-          gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.08, overwrite: 'auto' });
-        });
-        // Toggle cursor style + efecto magnético en botones/enlaces:
-        // el elemento se desplaza ligeramente hacia el puntero mientras lo sobrevuela.
+      /* ---------- Efecto magnético en botones/enlaces (cursor normal, sin punto) ---------- */
+      if (window.gsap && !reduceMotion && window.matchMedia('(min-width: 1024px)').matches) {
         document.querySelectorAll('a, button, [role="button"], .ctela, .swatch, .size-btn, .tex-btn, .edge-btn').forEach((el) => {
           const strength = 0.35;   // 0 = inmóvil, 1 = sigue al cursor
-          el.addEventListener('mouseenter', () => cursor.classList.add('hover-btn'));
           el.addEventListener('mousemove', (e) => {
             const r = el.getBoundingClientRect();
             const mx = e.clientX - (r.left + r.width / 2);
@@ -1990,17 +1915,8 @@
             gsap.to(el, { x: mx * strength, y: my * strength, duration: 0.3, ease: 'power3.out', overwrite: 'auto' });
           });
           el.addEventListener('mouseleave', () => {
-            cursor.classList.remove('hover-btn');
             gsap.to(el, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.4)', overwrite: 'auto' });
           });
-        });
-        // Toggle cursor style on hover of 3D / SVG Stage
-        const viewers = [document.getElementById('cushion3d'), document.getElementById('heroViewer'), document.getElementById('cushionArt')];
-        viewers.forEach((v) => {
-          if (v) {
-            v.addEventListener('mouseenter', () => cursor.classList.add('hover-3d'));
-            v.addEventListener('mouseleave', () => cursor.classList.remove('hover-3d'));
-          }
         });
       }
 
@@ -2046,7 +1962,7 @@
           2: { glb: 'assets/3d/escena_2cojines.glb?v=9', label: '2 cojines', n: 2 },
           3: { glb: 'assets/3d/escena_3cojines.glb?v=9', label: '3 mixtos', n: 3 },
         };
-        const state = { arr: 2, sofa: 'natural', cush: ['t11', 't25', 't1'], active: 0, loaded: false };
+        const state = { arr: 2, sofa: 'natural', cush: ['t11', 't25', 't16'], active: 0, loaded: false };
         const sofaName = (id) => (id === 'natural' ? 'Natural' : CTELA_BY_ID[id].name);
         const skel = document.getElementById('ambienteSkeleton');
 

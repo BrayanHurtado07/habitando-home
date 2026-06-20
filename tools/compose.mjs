@@ -23,6 +23,12 @@ const ARRANGEMENTS = {
     { size: 0.28, pos: [0.23, 0.105, 0.02], tiltX: -18, yaw: 0 },
     { size: 0.22, pos: [-0.02, 0.085, 0.06], tiltX: -14, yaw: 0 },
   ],
+  // Hero: 3 cojines AGRUPADOS y superpuestos en el lado izquierdo (fanned/clustered)
+  'escena_hero': [
+    { size: 0.29, pos: [-0.26, 0.105, -0.01], tiltX: -17, yaw: 10 },  // atrás-izquierda, más recostado
+    { size: 0.26, pos: [-0.13, 0.10, 0.05], tiltX: -14, yaw: 0 },     // medio
+    { size: 0.27, pos: [0.01, 0.10, 0.11], tiltX: -11, yaw: -10 },    // delante-derecha, más erguido
+  ],
 };
 
 const io = new NodeIO();
@@ -70,6 +76,8 @@ async function build(placements, out) {
   console.log('escrito →', out, '| materiales:', sofa.getRoot().listMaterials().map((m) => m.getName()).join(', '));
 }
 
+const only = process.argv[2]; // opcional: genera solo esa escena (p.ej. node tools/compose.mjs escena_hero)
 for (const [name, placements] of Object.entries(ARRANGEMENTS)) {
+  if (only && name !== only) continue;
   await build(placements, `assets/3d/${name}.glb`);
 }

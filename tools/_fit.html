@@ -1,15 +1,4 @@
 <!DOCTYPE html><html><head><meta charset="utf-8">
 <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
-<style>body{margin:0;background:#EFE7DD;font-family:sans-serif}.r{display:flex;flex-wrap:wrap;gap:8px;padding:8px}.c{position:relative;width:456px;height:392px;border:1px solid #bbb;overflow:hidden}model-viewer{width:100%;height:100%;background:transparent}.l{position:absolute;top:4px;left:6px;background:#000;color:#fff;font-size:11px;padding:2px 6px;border-radius:3px;z-index:2}</style></head>
-<body><div class="r" id="r"></div><script type="module">
-const opts=[
- {o:'26deg 80deg 80%',tg:'-0.1m 0m 0m',t:'A r80 tg-.1'},
- {o:'28deg 80deg 72%',tg:'-0.15m 0m 0m',t:'B r72 tg-.15'},
- {o:'24deg 81deg 88%',tg:'-0.05m 0m 0m',t:'C r88 tg-.05'},
- {o:'30deg 79deg 76%',tg:'-0.18m 0m 0m',t:'D r76 tg-.18'},
-];
-const r=document.getElementById('r');
-opts.forEach(x=>{const c=document.createElement('div');c.className='c';c.innerHTML=`<span class="l">${x.t}</span>`;
-const m=document.createElement('model-viewer');m.setAttribute('src','../assets/3d/escena_1cojin.glb');
-m.setAttribute('camera-orbit',x.o);m.setAttribute('camera-target',x.tg);m.setAttribute('environment-image','neutral');m.setAttribute('exposure','1.05');m.setAttribute('shadow-intensity','1.2');m.setAttribute('interaction-prompt','none');c.appendChild(m);r.appendChild(c);});
-</script></body></html>
+<style>body{margin:0;background:#EFE7DD}.c{position:relative;width:570px;height:490px;margin:8px;overflow:hidden}model-viewer{width:100%;height:100%;background:transparent}</style></head>
+<body><div class="c"><model-viewer src="../assets/3d/escena_hero.glb" camera-orbit="28deg 80deg 72%" camera-target="-0.15m 0m 0m" environment-image="neutral" exposure="1.05" shadow-intensity="1.2" interaction-prompt="none"></model-viewer></div></body></html>

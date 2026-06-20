@@ -1,0 +1,10 @@
+import puppeteer from 'puppeteer-core';
+const CHROME='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+const b=await puppeteer.launch({executablePath:CHROME,headless:'new',args:['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--no-sandbox','--hide-scrollbars']});
+const p=await b.newPage();await p.setViewport({width:1280,height:1000});
+await p.goto('http://localhost:8765/index.html',{waitUntil:'networkidle0',timeout:60000});
+await p.addStyleTag({content:'.reveal,.hero-el{opacity:1!important;transform:none!important}'});
+await p.evaluate(()=>document.querySelector('#ambiente').scrollIntoView());
+await p.evaluate(()=>new Promise(r=>{const mv=document.getElementById('ambienteViewer');if(mv&&mv.loaded)return r();mv?mv.addEventListener('load',r,{once:true}):r();setTimeout(r,25000);}));
+await new Promise(r=>setTimeout(r,1500));
+const el=await p.$('#ambiente');await el.screenshot({path:'/tmp/amb.png'});await b.close();console.log('ok');

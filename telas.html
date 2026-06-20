@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Catálogo de Telas · Habitando</title>
-  <meta name="description" content="Catálogo de telas de tapicería Habitando: jacquard, seda y satén para tus cojines a medida. Códigos, composición y precios." />
+  <meta name="description" content="Catálogo de telas de tapicería Habitando: jacquard, seda y satén para tus cojines a medida. Códigos y composición." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="dist/tailwind.css" />
+  <link rel="stylesheet" href="dist/tailwind.css?v=12" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script>
@@ -49,53 +49,6 @@
       }
     }
 
-    /* Custom Cursor */
-    #customCursor {
-      display: none;
-    }
-    @media (min-width: 1024px) {
-      #customCursor {
-        display: block;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 10px;
-        height: 10px;
-        background-color: #1C1A17;
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 9999;
-        transform: translate(-50%, -50%);
-        will-change: transform;
-        transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease, border 0.3s ease;
-      }
-      #customCursor.hover-btn {
-        width: 16px;
-        height: 16px;
-        background-color: #C0643E;
-        border: none;
-      }
-      #customCursor.hover-card {
-        width: 65px;
-        height: 65px;
-        background-color: rgba(247, 244, 239, 0.92);
-        border: 1px solid rgba(28, 26, 23, 0.15);
-        box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
-      }
-      #customCursor.hover-card::after {
-        content: 'Ver cojín';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 8px;
-        font-family: 'Inter', sans-serif;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        color: #1C1A17;
-        font-weight: 600;
-      }
-    }
   </style>
 
   <!-- ============ SEO JSON-LD ============ -->
@@ -115,8 +68,6 @@
 </head>
 <body class="bg-cream text-ink font-sans antialiased selection:bg-clay selection:text-cream">
 
-  <!-- ============ CUSTOM CURSOR ============ -->
-  <div id="customCursor" class="hidden lg:block"></div>
 
   <!-- HEADER -->
   <header id="nav" class="fixed top-0 inset-x-0 z-50 transition-all duration-500">
@@ -161,16 +112,15 @@
       <p class="text-sm">Tu carrito está vacío.<br/>Personaliza un cojín y añádelo.</p>
     </div>
     <div id="cartFooter" class="hidden border-t border-ink/10 px-6 py-5 space-y-4">
-      <div id="bulkNote" class="hidden text-xs text-clay font-medium bg-clay/10 rounded-lg px-3 py-2"></div>
       <div class="flex items-center justify-between">
-        <span class="text-ink/60">Total (<span id="cartUnits">0</span> uds.)</span>
-        <span class="font-serif text-3xl">S/ <span id="cartTotal">0</span></span>
+        <span class="text-ink/60">Total</span>
+        <span class="font-serif text-2xl"><span id="cartUnits">0</span> <span class="text-base font-sans text-ink/60">cojines</span></span>
       </div>
       <a id="cartCheckout" href="#" target="_blank" rel="noopener" class="w-full rounded-full bg-[#1FA855] text-white py-4 font-medium hover:brightness-95 transition flex items-center justify-center gap-2">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.518 5.26l-.999 3.648 3.741-.982z"/></svg>
         Finalizar pedido por WhatsApp
       </a>
-      <p class="text-[11px] text-ink/65 text-center">Apartas con 50% · resto contra entrega · envío a coordinar</p>
+      <p class="text-[11px] text-ink/65 text-center">Te cotizamos por WhatsApp · apartas con 50% · envío a coordinar</p>
     </div>
   </aside>
 
@@ -243,13 +193,26 @@
     const WHATSAPP = '51953363930';
     // Telas (numeración = readme.md de assets/telas/web/)
     const TELAS = [
-      { n: 1,  code: '1071-TE SVEVO ONE',     price: 49,  tipo: 'Jacquard', ancho: '1.42', comp: '100% PES', mart: '18000' },
-      { n: 2,  code: '1072-TE IKEBANA ALLOVER',price: 66, tipo: 'Jacquard', ancho: '1.42', comp: '100% PES', mart: '18000' },
-      { n: 3,  code: '1075-TE UXMAL',          price: 66,  tipo: 'Jacquard', ancho: '1.42', comp: '100% PES', mart: '18000' },
+      // Colección 1906 (assets/telas/web/1906/) — novedades, se muestran primero:
+      { n: 101, code: 'Velvet Vienna Oro',         price: 0,  tipo: 'Velvet',   ancho: '1.42', comp: '100% Poliéster',           mart: '', img: 'assets/telas/web/1906/1.jpg' },
+      { n: 102, code: 'Velvet Star Beige',         price: 0,  tipo: 'Velvet',   ancho: '1.45', comp: '100% Poliéster',           mart: '', img: 'assets/telas/web/1906/2.webp' },
+      { n: 103, code: 'Velvet Vienna Topo',        price: 0,  tipo: 'Velvet',   ancho: '1.42', comp: '100% Poliéster',           mart: '', img: 'assets/telas/web/1906/3.webp' },
+      { n: 104, code: 'Velvet Vienna Blanco',      price: 0,  tipo: 'Velvet',   ancho: '1.42', comp: '100% Poliéster',           mart: '', img: 'assets/telas/web/1906/4.webp' },
+      { n: 105, code: 'Velvet Vienna Gris Claro',  price: 0,  tipo: 'Velvet',   ancho: '1.42', comp: '100% Poliéster',           mart: '', img: 'assets/telas/web/1906/5.webp' },
+      { n: 106, code: 'Velvet Vienna Terracota',   price: 0,  tipo: 'Velvet',   ancho: '1.42', comp: '100% Poliéster',           mart: '', img: 'assets/telas/web/1906/6.webp' },
+      { n: 107, code: 'Velvet Vienna Chocolate',   price: 0,  tipo: 'Velvet',   ancho: '1.42', comp: '100% Poliéster',           mart: '', img: 'assets/telas/web/1906/7.webp' },
+      { n: 108, code: 'Velvet Essenza Beige Claro',price: 0,  tipo: 'Velvet',   ancho: '1.40', comp: '100% Poliéster',           mart: '', img: 'assets/telas/web/1906/8.webp' },
+      { n: 109, code: 'Velvet Essenza Gris Claro', price: 0,  tipo: 'Velvet',   ancho: '1.40', comp: '100% Poliéster',           mart: '', img: 'assets/telas/web/1906/9.webp' },
+      { n: 110, code: 'ADN / 10 Beige',            price: 63, tipo: 'Chenille', ancho: '1.4',  comp: '45% Cv · 33% Pes · 22% Pan', mart: '18000', img: 'assets/telas/web/1906/10.jpg' },
+      { n: 111, code: 'Terciopelo Verde Oliva',    price: 0,  tipo: 'Velvet',   ancho: '1.42', comp: '100% Poliéster',           mart: '', img: 'assets/telas/web/1906/11.jpeg' },
+      // Telas sin stock (comentadas — descomenta para reactivar):
+      // { n: 1,  code: '1071-TE SVEVO ONE',     price: 49,  tipo: 'Jacquard', ancho: '1.42', comp: '100% PES', mart: '18000' },
+      // { n: 2,  code: '1072-TE IKEBANA ALLOVER',price: 66, tipo: 'Jacquard', ancho: '1.42', comp: '100% PES', mart: '18000' },
+      // { n: 3,  code: '1075-TE UXMAL',          price: 66,  tipo: 'Jacquard', ancho: '1.42', comp: '100% PES', mart: '18000' },
       { n: 4,  code: '13724 / 39',             price: 104, tipo: 'Seda',     ancho: '1.4',  comp: '45% Cv · 33% Pes · 22% Pan', mart: '18000' },
-      { n: 5,  code: '18466',                  price: 124, tipo: 'Jacquard', ancho: '1.42', comp: '', mart: '' },
-      { n: 6,  code: '18511',                  price: 107, tipo: 'Jacquard', ancho: '1.42', comp: '', mart: '' },
-      { n: 7,  code: '18556',                  price: 110, tipo: 'Jacquard', ancho: '1.42', comp: '', mart: '' },
+      // { n: 5,  code: '18466',                  price: 124, tipo: 'Jacquard', ancho: '1.42', comp: '', mart: '' },
+      // { n: 6,  code: '18511',                  price: 107, tipo: 'Jacquard', ancho: '1.42', comp: '', mart: '' },
+      // { n: 7,  code: '18556',                  price: 110, tipo: 'Jacquard', ancho: '1.42', comp: '', mart: '' },
       { n: 8,  code: 'AIB0001 / A08',          price: 15,  tipo: 'Satén',    ancho: '1.4',  comp: '45% Cv · 33% Pes · 22% Pan', mart: '' },
       { n: 9,  code: 'AIB0001 / A02',          price: 15,  tipo: 'Satén',    ancho: '1.4',  comp: '45% Cv · 33% Pes · 22% Pan', mart: '' },
       { n: 10, code: 'AIB0001 / A06',          price: 15,  tipo: 'Satén',    ancho: '1.4',  comp: '45% Cv · 33% Pes · 22% Pan', mart: '' },
@@ -271,13 +234,12 @@
       { n: 26, code: 'COPENHAGEN / 502',       price: 49,  tipo: 'Jacquard', ancho: '1.42', comp: '100% PES', mart: '' },
       { n: 27, code: 'COPENHAGEN / 803',       price: 49,  tipo: 'Jacquard', ancho: '1.42', comp: '', mart: '' },
     ];
-    const img = (n) => 'assets/telas/web/tela-' + String(n).padStart(2, '0') + '.jpg';
+    const img = (t) => t.img || 'assets/telas/web/tela-' + String(t.n).padStart(2, '0') + '.jpg';
     const cfgHref = (t) => 'index.html?tela=' + t.n + '#configurador';   // ver la tela en el cojín
     const waHref = (t) => 'https://wa.me/' + WHATSAPP + '?text=' +
       encodeURIComponent('Hola Habitando 👋 Me interesa la tela *' + t.code + '* (' + t.tipo + '). ¿Está disponible para un cojín a medida?');
 
-    const PRICE = 54;
-    const PRICE_BULK = 50;
+    // Precios se manejan por WhatsApp (cambian seguido) — no se muestran en el sitio.
     const VARIANTS = {
       terracota: { name: 'Terracota',    hex: '#CF7339', stage: '#EFE3D6' },
       crema:     { name: 'Crema',        hex: '#CFC8BD', stage: '#F2EDE3' },
@@ -304,7 +266,7 @@
     };
     const TILE = 6;
     const CTELA_TILE = 2;
-    const ctelaImg = (t) => 'assets/telas/web/tela-' + String(t.n).padStart(2, '0') + '.jpg';
+    const ctelaImg = (t) => t.img || 'assets/telas/web/tela-' + String(t.n).padStart(2, '0') + '.jpg';
     const SIZES = {
       '40x40': { label: '40 × 40 cm', short: '40×40' },
       '45x45': { label: '45 × 45 cm', short: '45×45' },
@@ -314,11 +276,13 @@
     const CTELA_HEX = {
       1: '#C39E8D', 2: '#A39C87', 3: '#5C5E4B', 4: '#C3B4A0', 5: '#8B7A7D', 6: '#51535D', 7: '#72655E', 8: '#ACA5A0', 9: '#A49A91', 10: '#8B827B',
       11: '#75655B', 12: '#2F332C', 13: '#848586', 14: '#727174', 15: '#979493', 16: '#D7B8B4', 17: '#7E837A', 18: '#1F221B', 19: '#212429',
-      20: '#937F74', 21: '#403E41', 22: '#908F90', 23: '#A4A29C', 24: '#7E7763', 25: '#36211A', 26: '#2A2B1C', 27: '#716D6C'
+      20: '#937F74', 21: '#403E41', 22: '#908F90', 23: '#A4A29C', 24: '#7E7763', 25: '#36211A', 26: '#2A2B1C', 27: '#716D6C',
+      101: '#C9A24B', 102: '#CAB196', 103: '#8C7F70', 104: '#ECE7DD', 105: '#B4B4B2', 106: '#B05C3B',
+      107: '#4B362A', 108: '#D2C2A6', 109: '#9A9A98', 110: '#B6A488', 111: '#6B6B3A'
     };
     const CTELA_BY_ID = {};
     TELAS.forEach((t) => {
-      CTELA_BY_ID['t' + t.n] = { id: 't' + t.n, n: t.n, name: t.code, tipo: t.tipo, hex: CTELA_HEX[t.n] || '#C39E8D' };
+      CTELA_BY_ID['t' + t.n] = { id: 't' + t.n, n: t.n, name: t.code, tipo: t.tipo, hex: CTELA_HEX[t.n] || '#C39E8D', img: t.img };
     });
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -449,7 +413,7 @@
       return (
         '<article class="card group rounded-2xl bg-white overflow-hidden flex flex-col">' +
           '<a href="' + cfgHref(t) + '" data-n="' + t.n + '" class="open-cushion block relative aspect-square overflow-hidden bg-sand">' +
-            '<img class="zoom w-full h-full object-cover" src="' + img(t.n) + '" alt="Tela ' + t.code + '" loading="lazy" />' +
+            '<img class="zoom w-full h-full object-cover" src="' + img(t) + '" alt="Tela ' + t.code + '" loading="lazy" />' +
             '<span class="absolute top-3 left-3 text-[10px] uppercase tracking-wider bg-cream/85 backdrop-blur px-2.5 py-1 rounded-full">' + t.tipo + '</span>' +
             '<span class="absolute inset-0 bg-ink/0 group-hover:bg-ink/25 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">' +
               '<span class="bg-cream text-ink text-xs font-medium px-4 py-2 rounded-full">Ver en cojín →</span>' +
@@ -458,9 +422,8 @@
           '<div class="p-4 flex flex-col flex-1">' +
             '<a href="' + cfgHref(t) + '" data-n="' + t.n + '" class="open-cushion font-medium text-xs sm:text-sm leading-snug hover:text-clay truncate sm:whitespace-normal block">' + t.code + '</a>' +
             '<ul class="mt-2 space-y-0.5 text-xs text-ink/50 flex-1">' + specs + '</ul>' +
-            '<div class="mt-3 flex items-center justify-between">' +
-              '<span class="font-serif text-xl">$' + t.price.toFixed(2) + '<span class="text-xs text-ink/65 font-sans"> /m</span></span>' +
-              '<a href="' + waHref(t) + '" target="_blank" rel="noopener" class="text-xs font-medium text-[#1FA855] hover:underline">Consultar</a>' +
+            '<div class="mt-3 flex items-center justify-end">' +
+              '<a href="' + waHref(t) + '" target="_blank" rel="noopener" class="text-xs font-medium text-[#1FA855] hover:underline">Consultar precio →</a>' +
             '</div>' +
           '</div>' +
         '</article>'
@@ -488,8 +451,6 @@
     const cartFooterEl = document.getElementById('cartFooter');
     const cartCountEl = document.getElementById('cartCount');
     const cartUnitsEl = document.getElementById('cartUnits');
-    const cartTotalEl = document.getElementById('cartTotal');
-    const bulkNoteEl = document.getElementById('bulkNote');
     const cartCheckout = document.getElementById('cartCheckout');
     let renderId = 0;
 
@@ -502,7 +463,6 @@
       } catch (e) {}
     };
     const totalUnits = () => cart.reduce((n, i) => n + i.qty, 0);
-    const unitPrice = () => (totalUnits() >= 3 ? PRICE_BULK : PRICE);
     function itemFabric(it) {
       if (it.ctela && CTELA_BY_ID[it.ctela]) { const t = CTELA_BY_ID[it.ctela]; return { v: { name: t.name, hex: t.hex }, url: ctelaImg(t), tile: CTELA_TILE }; }
       const v = VARIANTS[it.color]; return { v: v, url: FABRIC[it.color], tile: TILE };
@@ -514,15 +474,13 @@
     }
     function removeItem(id) { const i = cart.findIndex((x) => x.id === id); if (i >= 0) cart.splice(i, 1); saveCart(); renderCart(); }
     function checkoutHref() {
-      const price = unitPrice();
-      let msg = 'Hola Habitando 👋 Quiero hacer este pedido:\n';
+      let msg = 'Hola Habitando 👋 Quiero hacer este pedido y que me pasen el precio:\n';
       cart.forEach((it) => { msg += `\n• ${it.qty}× ${it.name} · ${it.tipo} · borde ${it.edgeName.toLowerCase()} · ${it.sizeLabel}`; });
-      msg += `\n\nTotal: ${totalUnits()} cojines × S/ ${price} = *S/ ${price * totalUnits()}*`;
-      msg += '\n\n¿Coordinamos el 50% para apartar? 🙌';
+      msg += '\n\n¿Me cotizan, por favor? 🙌';
       return 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(msg);
     }
     function renderCart() {
-      const units = totalUnits(), price = unitPrice();
+      const units = totalUnits();
       if (units > 0) { cartCountEl.textContent = units; cartCountEl.classList.remove('hidden'); }
       else cartCountEl.classList.add('hidden');
 
@@ -545,7 +503,6 @@
             '</div>' +
           '</div>' +
           '<div class="text-right">' +
-            '<p class="font-medium">S/ ' + (price * it.qty) + '</p>' +
             '<button class="rm text-xs text-ink/65 hover:text-clay" data-id="' + it.id + '">Quitar</button>' +
           '</div>' +
         '</div>').join('');
@@ -553,10 +510,6 @@
       cartItemsEl.querySelectorAll('.rm').forEach((b) => b.onclick = () => removeItem(b.dataset.id));
 
       cartUnitsEl.textContent = units;
-      cartTotalEl.textContent = price * units;
-      if (units >= 3) bulkNoteEl.textContent = '✓ Precio mayorista aplicado: S/ ' + PRICE_BULK + ' c/u';
-      else { const f = 3 - units; bulkNoteEl.textContent = 'Añade ' + f + (f === 1 ? ' cojín más' : ' cojines más') + ' y todos quedan a S/ ' + PRICE_BULK + ' c/u'; }
-      bulkNoteEl.classList.remove('hidden');
       cartCheckout.href = checkoutHref();
     }
     function openCart() { cartDrawer.classList.remove('translate-x-full'); cartOverlay.classList.remove('opacity-0', 'pointer-events-none'); document.body.style.overflow = 'hidden'; if (lenis) lenis.stop(); }
@@ -629,27 +582,6 @@
       }
     });
 
-    /* ---------- Custom Cursor Following Logic ---------- */
-    const cursor = document.getElementById('customCursor');
-    if (cursor && window.gsap && !reduceMotion) {
-      document.addEventListener('mousemove', (e) => {
-        gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.08, overwrite: 'auto' });
-      });
-      // Toggle cursor style on hover of buttons/links
-      document.querySelectorAll('a, button, [role="button"], .chip').forEach((el) => {
-        el.addEventListener('mouseenter', () => cursor.classList.add('hover-btn'));
-        el.addEventListener('mouseleave', () => cursor.classList.remove('hover-btn'));
-      });
-      // Toggle cursor style on hover of catalog cards
-      gridEl.addEventListener('mouseenter', (e) => {
-        const cardLink = e.target.closest('.open-cushion');
-        if (cardLink) cursor.classList.add('hover-card');
-      }, true);
-      gridEl.addEventListener('mouseleave', (e) => {
-        const cardLink = e.target.closest('.open-cushion');
-        if (cardLink) cursor.classList.remove('hover-card');
-      }, true);
-    }
   })();
   </script>
 </body>
